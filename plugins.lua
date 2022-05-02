@@ -233,12 +233,12 @@ local plugins = {
       },
 
       -- show lightbulb when have code actions
-      {
-        "kosayoda/nvim-lightbulb",
-        config = function()
-          vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-        end,
-      },
+      -- {
+      --   "kosayoda/nvim-lightbulb",
+      --   config = function()
+      --     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
+      --   end,
+      -- },
       -- note taking in neovim
       {
         "nvim-neorg/neorg",
