@@ -20,6 +20,7 @@ set.pumblend = 0
 set.timeoutlen = 10000
 -- set.smartindent=true
 set.cindent = true
+set.cursorline = false
 
 vim.g["slime_target"] = "kitty"
 
@@ -64,6 +65,6 @@ function CenterPane()
 endfunction
 
 "https://stackoverflow.com/questions/2295410/how-to-prevent-the-cursor-from-moving-back-one-character-on-leaving-insert-mode
-autocmd InsertLeave * :normal! `^
+" autocmd InsertLeave * :normal! `^
 " set virtualedit=onemore
 ]]

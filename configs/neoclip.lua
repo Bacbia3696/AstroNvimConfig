@@ -21,16 +21,18 @@ function M.config()
     keys = {
       telescope = {
         i = {
-          select = "<cr>",
-          paste = "<c-y>",
+          -- select = "<cr>",
+          -- paste = "<c-y>",
+          paste = "<cr>",
           paste_behind = "<c-e>",
           replay = "<c-q>", -- replay a macro
           delete = "<c-d>", -- delete an entry
           custom = {},
         },
         n = {
-          select = "<cr>",
-          paste = "p",
+          -- select = "<cr>",
+          -- paste = "p",
+          paste = "<cr>",
           paste_behind = "P",
           replay = "q",
           delete = "d",

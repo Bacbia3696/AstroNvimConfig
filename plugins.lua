@@ -9,11 +9,6 @@ local plugins = {
       "metakirby5/codi.vim", -- interactive environment for coding
       {
         "jpalardy/vim-slime", -- send command to external program!!
-        -- run = 'g ss pop',
-      },
-      {
-        "tami5/sqlite.lua",
-        otp = false,
       },
 
       {
@@ -38,6 +33,31 @@ local plugins = {
           ]]
         end,
         requires = "nvim-lua/plenary.nvim",
+      },
+
+      -- alternate file
+      -- TODO: need to config more
+      {
+        'rgroli/other.nvim',
+        config = function()
+          require("other-nvim").setup({
+            mappings = {
+              {
+                pattern = "/src/(.*)/index.tsx$",
+                target = "/src/%1/style.scss",
+              },
+              {
+                pattern = "/src/(.*)/style.scss",
+                target = "/src/%1/index.tsx$",
+              },
+            },
+          })
+
+          vim.keymap.set("", "<space>ll", "<cmd>Other<CR>", { silent = true })
+          vim.keymap.set("", "<space>lp", "<cmd>OtherSplit<CR>", { silent = true })
+          vim.keymap.set("", "<space>lv", "<cmd>OtherVSplit<CR>", { silent = true })
+          vim.keymap.set("", "<space>lc", "<cmd>OtherClear<CR>", { silent = true })
+        end
       },
 
       -- code coverage for go
@@ -65,7 +85,7 @@ local plugins = {
             end
 
             if testCurrentFunction then
-              goc.CoverageFunc(nil, cb, 0)
+              goc.CoverageFunc(nil, cb)
             else
               goc.Coverage(nil, cb)
             end
@@ -153,6 +173,7 @@ local plugins = {
               -- pass any additional options that will be merged in the final lsp config
               lspconfig = {
                 -- cmd = {"lua-language-server"},
+                ---@diagnostic disable-next-line: unused-local
                 on_attach = function(client, bufnr)
                   client.resolved_capabilities.document_formatting = false
                 end
@@ -232,13 +253,6 @@ local plugins = {
         end,
       },
 
-      -- show lightbulb when have code actions
-      -- {
-      --   "kosayoda/nvim-lightbulb",
-      --   config = function()
-      --     vim.cmd [[autocmd CursorHold,CursorHoldI * lua require'nvim-lightbulb'.update_lightbulb()]]
-      --   end,
-      -- },
       -- note taking in neovim
       {
         "nvim-neorg/neorg",
@@ -272,6 +286,10 @@ local plugins = {
       "jvgrootveld/telescope-zoxide",
       "benfowler/telescope-luasnip.nvim",
       "nvim-neorg/neorg-telescope",
+      {
+        "tami5/sqlite.lua",
+        opt = false
+      },
       {
         "AckslD/nvim-neoclip.lua",
         requires = {

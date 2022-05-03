@@ -26,13 +26,13 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 vim.api.nvim_create_autocmd("ColorScheme", {
   pattern = { "*" },
   command = [[highlight LineNr guifg=grey
-  highlight TSTag guifg=#61afef
-  highlight TSString guifg=#d47d85
-  highlight TSFunction guifg=#ebcb8b
-  highlight TSInclude guifg=#c678dd
+  highlight TSTag guifg=#e5c07b
+  highlight TSString guifg=#61afef
+  highlight TSFunction guifg=#ff75a0
+  highlight TSInclude guifg=#56b6c2
+  highlight TelescopeSelection guifg=#56b6c2
   ]]
 })
-  -- highlight TSVariable guifg=#d47d85
   -- highlight TSTagAttribute guifg=#d39ede
 
 -- sql
