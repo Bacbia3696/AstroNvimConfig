@@ -30,10 +30,11 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight TSString guifg=#61afef
   highlight TSFunction guifg=#ff75a0
   highlight TSInclude guifg=#56b6c2
+  highlight TSNamespace guifg=#c678dd
   highlight TelescopeSelection guifg=#56b6c2
   ]]
 })
-  -- highlight TSTagAttribute guifg=#d39ede
+-- highlight TSTagAttribute guifg=#d39ede
 
 -- sql
 vim.api.nvim_create_autocmd("FileType", {

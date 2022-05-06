@@ -34,6 +34,9 @@ local plugins = {
         end,
         requires = "nvim-lua/plenary.nvim",
       },
+      {
+        'andymass/vim-matchup'
+      },
 
       -- alternate file
       -- TODO: need to config more

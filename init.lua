@@ -3,6 +3,15 @@ local config = {
   -- Set colorscheme
   colorscheme = "default_theme",
 
+  options = {
+    opt = {
+      relativenumber = true, -- sets vim.opt.relativenumber
+    },
+    g = {
+      loaded_matchit = false, -- disable matchit
+    }
+  },
+
   -- Default theme configuration
   default_theme = {
     diagnostics_style = { italic = true },
@@ -27,7 +36,7 @@ local config = {
       highlights.CursorLineNr = { fg = C.gold, bg = C.none }
       highlights.LineNr = { fg = C.grey, bg = C.none }
       highlights.CursorColumn = { fg = C.gold, bg = C.purple_1 }
-      highlights.MatchParen = { style = "bold,italic,strikethrough" }
+      highlights.MatchParen = { style = "bold,italic,underline" }
 
       highlights.LspReferenceText = { fg = C.none, bg = C.grey_7, style = "italic" }
       highlights.LspReferenceRead = { fg = C.none, bg = C.grey_7 }
@@ -204,7 +213,7 @@ local config = {
   -- This function is run last
   -- good place to configure mappings and vim options
   polish = function()
-    require "user.options"
+    require "user.opt"
     require "user.mappings"
     require "user.autocmds"
     require "user.dap_configs"
