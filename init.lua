@@ -67,7 +67,6 @@ local config = {
     colorizer = true,
     comment = true,
     indent_blankline = true,
-    neoscroll = true,
     ts_rainbow = true,
     ts_autotag = true,
     toggle_term = true,

@@ -186,3 +186,7 @@ map('t', '<M-3>', [[<cmd>3wincmd w<cr>]])
 -- pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy
 map("n", "ss", [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]])
 map("n", "st", [[yat :silent execute '!pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy'<CR> vatp]])
+
+
+vim.keymap.set('n', '<C-y>', "3<Cmd>lua Scroll('<C-y>', 0, 1)<CR>")
+vim.keymap.set('n', '<C-e>', "3<Cmd>lua Scroll('<C-e>', 0, 1)<CR>")
