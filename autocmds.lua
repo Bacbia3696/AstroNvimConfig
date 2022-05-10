@@ -8,7 +8,7 @@
 
 local group = vim.api.nvim_create_augroup("utils", { clear = true })
 -- disable auto add comment new line
-vim.api.nvim_create_autocmd("BufEnter *", { command = "set formatoptions-=cro", group = group })
+vim.api.nvim_create_autocmd("BufEnter", { pattern = "*", command = "set formatoptions-=cro", group = group })
 -- highlight yanked text
 vim.api.nvim_create_autocmd(
   "TextYankPost",
@@ -24,13 +24,18 @@ vim.api.nvim_create_autocmd("BufReadPost", {
 
 -- colorscheme
 vim.api.nvim_create_autocmd("ColorScheme", {
-  pattern = { "*" },
+  pattern = "*",
   command = [[highlight LineNr guifg=grey
   highlight TSTag guifg=#e5c07b
   highlight TSString guifg=#61afef
   highlight TSFunction guifg=#ff75a0
   highlight TSInclude guifg=#56b6c2
   highlight TSNamespace guifg=#c678dd
+  highlight TSConditional guifg=#40d9ff
+  highlight TSRepeat guifg=#40d9ff
+  highlight TabLineSel guifg=#40d9ff guibg=NONE
+  highlight TabLine guifg=#ffffff guibg=NONE
+  highlight TabLineFill guibg=NONE
   highlight TelescopeSelection guifg=#56b6c2
   ]]
 })

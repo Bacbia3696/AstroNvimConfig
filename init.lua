@@ -22,6 +22,7 @@ local config = {
       local C = require "default_theme.colors"
 
       highlights.NonText = { fg = C.grey_2, bg = C.none }
+      highlights.TabLineFill = { bg = C.none }
 
       highlights.IndentBlanklineContextStart = { sp = C.blue_1, style = "underline" }
       highlights.IndentBlanklineContextChar = { fg = C.blue_1, style = "nocombine" }

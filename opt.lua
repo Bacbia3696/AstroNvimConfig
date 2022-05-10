@@ -21,6 +21,7 @@ set.timeoutlen = 10000
 -- set.smartindent=true
 set.cindent = true
 set.cursorline = false
+set.showtabline = 2
 
 vim.g["slime_target"] = "kitty"
 

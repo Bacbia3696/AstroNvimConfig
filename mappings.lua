@@ -70,7 +70,7 @@ map("i", ".", ".<c-g>u")
 map("i", "!", "!<c-g>u")
 
 -- plugin mapping
-map("n", "<leader><leader>", "<cmd>Telescope builtin<cr>")
+map("n", "<leader><leader>", "<cmd>Telescope find_files<cr>")
 map("n", "<leader>y", "<cmd>Telescope neoclip<cr>")
 map("n", "<leader>da", "<cmd>Telescope diagnostics<cr>")
 map("n", "<leader>e", "<cmd>NvimTreeToggle<cr>")
