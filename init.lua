@@ -23,6 +23,7 @@ local config = {
 
       highlights.NonText = { fg = C.grey_2, bg = C.none }
       highlights.TabLineFill = { bg = C.none }
+      highlights.TabLineSel = { fg = C.cyan }
 
       highlights.IndentBlanklineContextStart = { sp = C.blue_1, style = "underline" }
       highlights.IndentBlanklineContextChar = { fg = C.blue_1, style = "nocombine" }
