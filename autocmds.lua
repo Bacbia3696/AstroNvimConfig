@@ -1,10 +1,10 @@
 -- Set autocommands
--- vim.cmd [[
---   augroup packer_conf
---     autocmd!
---     autocmd bufwritepost plugins.lua source <afile> | PackerSync
---   augroup end
--- ]]
+vim.cmd [[
+  augroup packer_conf
+    autocmd!
+    autocmd bufwritepost plugins.lua source <afile> | PackerCompile
+  augroup end
+]]
 
 local group = vim.api.nvim_create_augroup("utils", { clear = true })
 -- disable auto add comment new line
@@ -34,7 +34,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight TSConditional guifg=#40d9ff
   highlight TSRepeat guifg=#40d9ff
   highlight TSConstBuiltin guifg=#ffbba6
-  highlight TSComment guifg=#90e0ef guibg=#233745
+  highlight TSComment guifg=#586ba4 gui=italic
   highlight TabLineSel guifg=#40d9ff guibg=NONE
   highlight TabLine guifg=#ffffff guibg=NONE
   highlight TabLineFill guibg=NONE
@@ -54,6 +54,7 @@ vim.api.nvim_create_autocmd("BufRead", {
   command = "set ft=jsonc",
 })
 
+-- for typescript definition files
 vim.api.nvim_create_autocmd("BufRead", {
   pattern = { "lib*.d.ts" },
   command = "ed ++ff=dos %",

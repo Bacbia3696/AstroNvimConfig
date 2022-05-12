@@ -1,3 +1,5 @@
+-- local handlers = require("configs/lsp/handlers")
+
 local plugins = {
   -- Add plugins, the packer syntax without the "use"
   init = function(plugins)
@@ -170,23 +172,18 @@ local plugins = {
         config = function()
           local luadev = require("lua-dev").setup {
             -- add any options here, or leave empty to use the default settings
+            library = {
+              vimruntime = true, -- runtime path
+              types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
+              plugins = true, -- installed opt or start plugins in packpath
+              -- you can also specify the list of plugins to make available as a workspace library
+              -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
+            },
+            runtime_path = false, -- enable this to get completion in require strings. Slow!
+            -- pass any additional options that will be merged in the final lsp config
             lspconfig = {
-              library = {
-                vimruntime = true, -- runtime path
-                types = true, -- full signature, docs and completion of vim.api, vim.treesitter, vim.lsp and others
-                plugins = true, -- installed opt or start plugins in packpath
-                -- you can also specify the list of plugins to make available as a workspace library
-                -- plugins = { "nvim-treesitter", "plenary.nvim", "telescope.nvim" },
-              },
-              runtime_path = false, -- enable this to get completion in require strings. Slow!
-              -- pass any additional options that will be merged in the final lsp config
-              lspconfig = {
-                -- cmd = {"lua-language-server"},
-                ---@diagnostic disable-next-line: unused-local
-                on_attach = function(client, bufnr)
-                  client.resolved_capabilities.document_formatting = false
-                end
-              },
+              -- cmd = {"lua-language-server"},
+              -- on_attach = require("configs/lsp/handlers").on_attach,
             },
           }
 
@@ -232,12 +229,10 @@ local plugins = {
         config = function()
           local opts = {
             tools = { -- rust-tools options
-              autoSetHints = true,
+              autoSetHints = false,
               hover_with_actions = true,
               inlay_hints = {
-                show_parameter_hints = true,
-                -- parameter_hints_prefix = "",
-                -- other_hints_prefix = "",
+                show_parameter_hints = false,
               },
             },
 
@@ -246,13 +241,14 @@ local plugins = {
             -- see https://github.com/neovim/nvim-lspconfig/blob/master/doc/server_configurations.md#rust_analyzer
             server = {
               -- on_attach is a callback called when the language server attachs to the buffer
-              -- on_attach = on_attach,
+              standalone = true,
               settings = {
                 -- to enable rust-analyzer settings visit:
                 -- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
                 ["rust-analyzer"] = {
                   cargo = {
                     allFeatures = true,
+                    -- features = {"exercises"},
                   },
                   -- enable clippy on save
                   checkOnSave = {
@@ -408,7 +404,7 @@ local plugins = {
   end,
 }
 
--- NOTE: for telescope extensions
+-- NOTE: for telescope extensions, need to remove before install telescope
 require("telescope").load_extension "neoclip"
 require("telescope").load_extension "dap"
 require("telescope").load_extension "zoxide"
