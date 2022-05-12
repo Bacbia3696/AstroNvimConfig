@@ -51,10 +51,11 @@ function M.config()
     on_open = function(win)
       vim.opt.list = false
       vim.cmd("colorscheme tokyonight")
+      vim.cmd [[Gitsigns toggle_current_line_blame]]
     end,
     -- callback where you can add custom code when the Zen window closes
     on_close = function()
-      -- vim.opt.list = true
+      vim.cmd [[Gitsigns toggle_current_line_blame]]
     end,
   }
 end

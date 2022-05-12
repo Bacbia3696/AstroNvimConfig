@@ -50,6 +50,8 @@ map("", "<M-k>", "<cmd>tabn<cr>")
 map("", "<M-t>", "<cmd>tabnew<cr>")
 map("", "<M-j>", "<cmd>tabp<cr>")
 map("", "<M-k>", "<cmd>tabn<cr>")
+map("", "[t", "<cmd>tabp<cr>")
+map("", "]t", "<cmd>tabn<cr>")
 -- navigate window
 for i = 1, 9, 1 do
   map({ "n", "i" }, "<M-" .. i .. ">", "<cmd>" .. i .. "wincmd w<cr>")
@@ -177,7 +179,6 @@ map("n", "<leader>pi", "<cmd>PackerInstall<cr>")
 map("n", "<leader>ps", "<cmd>PackerSync<cr>")
 map("n", "<leader>pS", "<cmd>PackerStatus<cr>")
 map("n", "<leader>pu", "<cmd>PackerUpdate<cr>")
-map("n", "<leader>6", "<C-6>")
 
 map('t', '<C-q>', [[<C-\><C-n>]])
 map('t', '<M-1>', [[<cmd>1wincmd w<cr>]])

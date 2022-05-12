@@ -38,7 +38,7 @@ M.config = {
         "--hidden",
         "--files",
         ".",
-        "-g=!**/{node_modules,dist,.git}/**",
+        "-g=!**/{node_modules,dist,.git,target}/**",
         "-g=!*.{gw,pb,validate}.go",
       },
     },

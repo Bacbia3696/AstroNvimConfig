@@ -33,6 +33,8 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight TSNamespace guifg=#c678dd
   highlight TSConditional guifg=#40d9ff
   highlight TSRepeat guifg=#40d9ff
+  highlight TSConstBuiltin guifg=#ffbba6
+  highlight TSComment guifg=#90e0ef guibg=#233745
   highlight TabLineSel guifg=#40d9ff guibg=NONE
   highlight TabLine guifg=#ffffff guibg=NONE
   highlight TabLineFill guibg=NONE
