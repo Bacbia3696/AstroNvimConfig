@@ -92,11 +92,11 @@ local config = {
 		---@diagnostic disable-next-line: unused-local
 		on_attach = function(client, bufnr)
 			if client.name == "gopls" then
-				client.resolved_capabilities.document_formatting = false
+				client.server_capabilities.documentFormattingProvider = false
 			end
 
 			if client.name == "cssmodules_ls" then
-				client.resolved_capabilities.goto_definition = false
+				client.server_capabilities.definitionProvider = false
 			end
 			vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
 		end,
@@ -205,7 +205,7 @@ local config = {
 			---@diagnostic disable-next-line: unused-local
 			on_attach = function(client)
 				-- if client.resolved_capabilities.document_formatting then
-				--   vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_sync()"
+				--   vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.format()"
 				-- end
 			end,
 		})

@@ -31,7 +31,7 @@ map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>")
 map("n", "ga", vim.lsp.buf.code_action)
 
 -- format onsave
-map({ "i", "n" }, "<C-s>", "<esc><cmd>lua vim.lsp.buf.formatting_sync()<cr><cmd>up<CR>", { silent = true })
+map({ "i", "n" }, "<C-s>", "<esc><cmd>lua vim.lsp.buf.format()<cr><cmd>up<CR>", { silent = true })
 map("", "<leader>q", "<cmd>qa<CR>")
 map("", "<C-q>", "<cmd>q<cr>")
 
