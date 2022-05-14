@@ -1,5 +1,5 @@
 local colors = {
-  bg = "NONE",
+	bg = "NONE",
 }
 
 return colors

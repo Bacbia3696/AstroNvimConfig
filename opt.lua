@@ -11,13 +11,13 @@ set.history = 1000 -- Number of commands to remember in a history table
 set.wrap = true
 set.linebreak = true
 set.showbreak = "↪ "
-set.cpo:append { n = true }
+set.cpo:append({ n = true })
 set.foldmethod = "indent"
 set.foldlevelstart = 10
 
 set.winblend = 0
 set.pumblend = 0
-set.timeoutlen = 10000
+set.timeoutlen = 1000
 -- set.smartindent=true
 set.cindent = true
 set.cursorline = false
@@ -29,10 +29,10 @@ vim.g.indent_blankline_char = "▏"
 
 vim.api.nvim_create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
 
-vim.cmd "cnoreabbrev t Telescope"
-vim.cmd "cnoreabbrev n Neorg"
+vim.cmd("cnoreabbrev t Telescope")
+vim.cmd("cnoreabbrev n Neorg")
 
-vim.cmd [[
+vim.cmd([[
 " print synstack group name
 function! SynStack()
   if !exists("*synstack")
@@ -40,10 +40,10 @@ function! SynStack()
   endif
   echo map(synstack(line('.'), col('.')), 'synIDattr(v:val, "name")')
 endfunc
-]]
+]])
 
 -- DiffWithSaved
-vim.cmd [[
+vim.cmd([[
 function! s:DiffWithSaved()
   let filetype=&ft
   diffthis
@@ -56,10 +56,10 @@ com! DiffSaved call s:DiffWithSaved()
 autocmd TermOpen * startinsert
 autocmd BufWinEnter,WinEnter term://* startinsert
 com OR lua vim.lsp.buf.execute_command({command = "_typescript.organizeImports", arguments = {vim.fn.expand("%:p")}})
-]]
+]])
 
-vim.cmd [[
+vim.cmd([[
 "https://stackoverflow.com/questions/2295410/how-to-prevent-the-cursor-from-moving-back-one-character-on-leaving-insert-mode
 autocmd InsertLeave * :normal! `^
 " set virtualedit=onemore
-]]
+]])
