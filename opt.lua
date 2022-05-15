@@ -27,7 +27,9 @@ vim.g["slime_target"] = "kitty"
 
 vim.g.indent_blankline_char = "▏"
 
-vim.api.nvim_create_user_command("Format", "execute 'lua vim.lsp.buf.formatting()'", {})
+vim.api.nvim_create_user_command("Format", function()
+	vim.lsp.buf.format({ async = true })
+end, {})
 
 vim.cmd("cnoreabbrev t Telescope")
 vim.cmd("cnoreabbrev n Neorg")
@@ -62,4 +64,8 @@ vim.cmd([[
 "https://stackoverflow.com/questions/2295410/how-to-prevent-the-cursor-from-moving-back-one-character-on-leaving-insert-mode
 autocmd InsertLeave * :normal! `^
 " set virtualedit=onemore
+" wrong indent yaml
+autocmd FileType yaml setl indentkeys-=<:>
 ]])
+
+vim.lsp.set_log_level(0)

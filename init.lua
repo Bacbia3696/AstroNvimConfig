@@ -64,7 +64,7 @@ local config = {
 
 	-- Disable default plugins
 	enabled = {
-		lualine = true,
+		-- lualine = true,
 		gitsigns = true,
 		colorizer = true,
 		comment = true,
@@ -98,7 +98,9 @@ local config = {
 			if client.name == "cssmodules_ls" then
 				client.server_capabilities.definitionProvider = false
 			end
-			vim.api.nvim_create_user_command("Format", vim.lsp.buf.formatting, {})
+			-- vim.api.nvim_create_user_command("Format", function ()
+			-- 	vim.lsp.buf.format({async=true})
+			-- end, {})
 		end,
 
 		-- override the lsp installer server-registration function
@@ -163,53 +165,6 @@ local config = {
 		virtual_text = true,
 		underline = true,
 	},
-
-	-- null-ls configuration
-	["null-ls"] = function()
-		-- Formatting and linting
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim
-		local status_ok, null_ls = pcall(require, "null-ls")
-		if not status_ok then
-			return
-		end
-
-		-- Check supported formatters
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-		local formatting = null_ls.builtins.formatting
-
-		-- Check supported linters
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-		local diagnostics = null_ls.builtins.diagnostics
-
-		null_ls.setup({
-			debug = false,
-			sources = {
-				-- action from gitsigns
-				-- null_ls.builtins.code_actions.gitsigns,
-				-- Set a formatter
-				formatting.prettier,
-				formatting.black,
-				formatting.goimports,
-				formatting.shfmt.with({
-					filetypes = { "sh", "zsh", "bash", "dockerfile" },
-				}),
-				formatting.sqlfluff,
-				-- formatting.gofumpt,
-				-- formatting.golines,
-				formatting.stylua,
-				-- Set a linter
-				diagnostics.golangci_lint,
-				diagnostics.sqlfluff,
-			},
-			-- NOTE: You can remove this on attach function to disable format on save
-			---@diagnostic disable-next-line: unused-local
-			on_attach = function(client)
-				-- if client.resolved_capabilities.document_formatting then
-				--   vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.format()"
-				-- end
-			end,
-		})
-	end,
 
 	-- This function is run last
 	-- good place to configure mappings and vim options

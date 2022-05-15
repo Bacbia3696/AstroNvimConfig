@@ -22,6 +22,13 @@ map("n", "[d", vim.diagnostic.goto_prev)
 map("n", "]d", vim.diagnostic.goto_next)
 map("n", "<leader>li", "<cmd>LspInfo<cr>")
 map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>")
+map("n", "<leader>6", "<C-^>")
+map("n", "<leader>5", "<cmd>Other<cr>")
+map("n", "<leader>4", "<cmd>AerialToggle<cr>")
+map("n", "<leader>3", "<cmd>NvimTreeToggle<cr>")
+map("n", "<leader>2", "<cmd>Format<cr>")
+map("n", "<leader>1", "<cmd>Telescope builtin<cr>")
+map("n", "<leader>e", "<cmd>Neotree position=float<cr>")
 
 -- use built-in
 -- map("n", "gr", vim.lsp.buf.references)
@@ -31,7 +38,7 @@ map("n", "<leader>lI", "<cmd>LspInstallInfo<cr>")
 map("n", "ga", vim.lsp.buf.code_action)
 
 -- format onsave
-map({ "i", "n" }, "<C-s>", "<esc><cmd>lua vim.lsp.buf.format()<cr><cmd>up<CR>", { silent = true })
+map({ "i", "n" }, "<C-s>", "<esc><cmd>Format<cr><cmd>up<CR>", { silent = true })
 map("", "<leader>q", "<cmd>qa<CR>")
 map("", "<C-q>", "<cmd>q<cr>")
 
@@ -75,7 +82,6 @@ map("i", "!", "!<c-g>u")
 map("n", "<leader><leader>", "<cmd>Telescope find_files<cr>")
 map("n", "<leader>y", "<cmd>Telescope neoclip<cr>")
 map("n", "<leader>da", "<cmd>Telescope diagnostics<cr>")
-map("n", "<leader>e", "<cmd>NvimTreeToggle<cr>")
 
 -- hop
 vim.keymap.set({ "n", "o", "x" }, "f", "<CMD>HopChar1MW<CR>")

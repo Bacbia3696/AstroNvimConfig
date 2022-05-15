@@ -232,10 +232,11 @@ local plugins = {
 				config = function()
 					local opts = {
 						tools = { -- rust-tools options
-							autoSetHints = false,
+							autoSetHints = true,
 							hover_with_actions = true,
 							inlay_hints = {
-								show_parameter_hints = false,
+								only_current_line = true,
+								only_current_line_autocmd = "CursorHold",
 							},
 						},
 
@@ -251,12 +252,14 @@ local plugins = {
 								-- https://github.com/rust-analyzer/rust-analyzer/blob/master/docs/user/generated_config.adoc
 								["rust-analyzer"] = {
 									cargo = {
-										allFeatures = true,
-										-- features = {"exercises"},
+										loadOutDirsFromCheck = true,
 									},
 									-- enable clippy on save
 									checkOnSave = {
 										command = "clippy",
+									},
+									procMacro = {
+										enable = true,
 									},
 								},
 							},
@@ -369,6 +372,52 @@ local plugins = {
 
 		-- add the my_plugins table to the plugin table
 		return vim.tbl_deep_extend("force", plugins, my_plugins)
+	end,
+	-- null-ls configuration
+	["null-ls"] = function()
+		-- Formatting and linting
+		-- https://github.com/jose-elias-alvarez/null-ls.nvim
+		local status_ok, null_ls = pcall(require, "null-ls")
+		if not status_ok then
+			return
+		end
+
+		-- Check supported formatters
+		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
+		local formatting = null_ls.builtins.formatting
+
+		-- Check supported linters
+		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
+		local diagnostics = null_ls.builtins.diagnostics
+
+		null_ls.setup({
+			debug = false,
+			sources = {
+				-- action from gitsigns
+				-- null_ls.builtins.code_actions.gitsigns,
+				-- Set a formatter
+				formatting.prettier,
+				formatting.black,
+				formatting.goimports,
+				formatting.shfmt.with({
+					filetypes = { "sh", "zsh", "bash", "dockerfile" },
+				}),
+				formatting.sqlfluff,
+				-- formatting.gofumpt,
+				-- formatting.golines,
+				formatting.stylua,
+				-- Set a linter
+				diagnostics.golangci_lint,
+				diagnostics.sqlfluff,
+			},
+			-- NOTE: You can remove this on attach function to disable format on save
+			---@diagnostic disable-next-line: unused-local
+			on_attach = function(client)
+				-- if client.resolved_capabilities.document_formatting then
+				--   vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.format()"
+				-- end
+			end,
+		})
 	end,
 
 	-- All other entries override the setup() call for default plugins
