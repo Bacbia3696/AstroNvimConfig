@@ -40,7 +40,7 @@ local config = {
 			highlights.CursorColumn = { fg = C.gold, bg = C.purple_1 }
 			highlights.MatchParen = { style = "bold,italic,underline" }
 
-			highlights.LspReferenceText = { fg = C.none, bg = C.grey_7, style = "italic" }
+			highlights.LspReferenceText = { fg = C.none, bg = C.grey_7 }
 			highlights.LspReferenceRead = { fg = C.none, bg = C.grey_7 }
 			highlights.LspReferenceWrite = { fg = C.none, bg = C.grey_7 }
 
@@ -104,23 +104,31 @@ local config = {
 		end,
 
 		-- override the lsp installer server-registration function
-		-- server_registration = function(server, server_opts)
-		--   -- Special code for rust.tools.nvim!
-		--   if server.name == "rust_analyzer" then
-		--     local extension_path = vim.fn.stdpath "data" .. "/dapinstall/codelldb/extension/"
-		--     local codelldb_path = extension_path .. "adapter/codelldb"
-		--     local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
-		--
-		--     require("rust-tools").setup {
-		--       server = server_opts,
-		--       dap = {
-		--         adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-		--       },
-		--     }
-		--   else
-		--     server:setup(server_opts)
-		--   end
-		-- end,
+		server_registration = function(server, opts)
+			-- Special code for rust.tools.nvim!
+			if server == "rust_analyzer" then
+				local extension_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
+				local codelldb_path = extension_path .. "adapter/codelldb"
+				local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+
+				-- add custom config
+				opts.settings["rust-analyzer"].cargo.allFeatures = true
+
+				require("rust-tools").setup({
+					tools = {
+						hover_actions = {
+							auto_focus = false,
+						},
+					},
+					server = opts,
+					dap = {
+						adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
+					},
+				})
+			else
+				require("lspconfig")[server].setup(opts)
+			end
+		end,
 
 		-- Add overrides for LSP server settings, the keys are the name of the server
 		["server-settings"] = {
