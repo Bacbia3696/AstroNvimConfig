@@ -68,4 +68,4 @@ autocmd InsertLeave * :normal! `^
 autocmd FileType yaml setl indentkeys-=<:>
 ]])
 
-vim.lsp.set_log_level(0)
+-- vim.lsp.set_log_level(0)

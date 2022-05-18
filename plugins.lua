@@ -315,12 +315,12 @@ local plugins = {
 					require("hop").setup({})
 				end,
 			},
-			{
-				"ray-x/lsp_signature.nvim",
-				config = function()
-					require("lsp_signature").setup()
-				end,
-			},
+			-- {
+			-- 	"ray-x/lsp_signature.nvim",
+			-- 	config = function()
+			-- 		require("lsp_signature").setup()
+			-- 	end,
+			-- },
 		}
 
 		-- change default config options
