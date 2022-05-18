@@ -27,19 +27,19 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 	command = [[highlight LineNr guifg=grey
   highlight TSTag guifg=#e5c07b
   highlight TSString guifg=#61afef
-  highlight TSFunction guifg=#ff75a0
+  highlight TSFunction guifg=#4FD3C4
   highlight TSInclude guifg=#56b6c2
   highlight TSNamespace guifg=#c678dd
   highlight TSConditional guifg=#40d9ff
   highlight TSRepeat guifg=#40d9ff
   highlight TSConstBuiltin guifg=#ffbba6
-  highlight TSComment guifg=#557B83 gui=italic
+  highlight TSComment guifg=#73777B gui=italic
   highlight TSFuncMacro guifg=#4E944F gui=bold
   highlight TabLineSel guifg=#40d9ff guibg=NONE
   highlight TabLine guifg=#ffffff guibg=NONE
   highlight TabLineFill guibg=NONE
   highlight TelescopeSelection guifg=#56b6c2
-  highlight GitSignsCurrentLineBlame guifg=#56b6c2 gui=italic
+  highlight GitSignsCurrentLineBlame guifg=#3BACB6 gui=italic
   highlight Folded guibg=NONE gui=underline,italic
   ]],
 })
