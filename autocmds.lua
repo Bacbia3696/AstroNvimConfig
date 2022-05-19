@@ -39,7 +39,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight TabLine guifg=#ffffff guibg=NONE
   highlight TabLineFill guibg=NONE
   highlight TelescopeSelection guifg=#56b6c2
-  highlight GitSignsCurrentLineBlame guifg=#3BACB6 gui=italic
+  highlight GitSignsCurrentLineBlame guifg=#2B8C96 gui=italic
   highlight Folded guibg=NONE gui=underline,italic
   ]],
 })

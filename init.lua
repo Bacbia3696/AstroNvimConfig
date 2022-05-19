@@ -109,10 +109,13 @@ local config = {
 			if server == "rust_analyzer" then
 				local extension_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
 				local codelldb_path = extension_path .. "adapter/codelldb"
-				local liblldb_path = extension_path .. "lldb/lib/liblldb.so"
+				local liblldb_path = "/opt/homebrew/opt/llvm/lib/liblldb.dylib"
 
 				-- add custom config
 				opts.settings["rust-analyzer"].cargo.allFeatures = true
+				opts.settings["rust-analyzer"].proMacro = {
+					enable = true,
+				}
 
 				require("rust-tools").setup({
 					tools = {
@@ -181,6 +184,7 @@ local config = {
 		require("user.mappings")
 		require("user.autocmds")
 		require("user.dap_configs")
+		require("user.lsp_configs")
 	end,
 }
 
