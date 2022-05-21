@@ -9,9 +9,9 @@ if not configs.ls_emmet then
 				"html",
 				"css",
 				"scss",
-				"javascript",
+				-- "javascript",
 				"javascriptreact",
-				"typescript",
+				-- "typescript",
 				"typescriptreact",
 				"haml",
 				"xml",
@@ -30,8 +30,10 @@ if not configs.ls_emmet then
 			end,
 			-- FIXME: this have no effect
 			settings = {
-				syntaxProfiles = {
-					html = "xhtml",
+				emmet_ls = {
+					syntaxProfiles = {
+						html = "xhtml",
+					},
 				},
 			},
 		},
@@ -40,4 +42,11 @@ end
 
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities.textDocument.completion.completionItem.snippetSupport = true
-lspconfig.ls_emmet.setup({ capabilities = capabilities })
+lspconfig.ls_emmet.setup({ capabilities = capabilities,
+
+})
+-- lspconfig.emmet_ls.setup({
+-- 	on_attach = on_attach,
+-- 	capabilities = capabilities,
+-- 	filetypes = { "html", "typescriptreact", "javascriptreact", "css", "sass", "scss", "less" },
+-- })

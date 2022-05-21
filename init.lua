@@ -116,9 +116,11 @@ local config = {
 				opts.settings["rust-analyzer"].proMacro = {
 					enable = true,
 				}
+				opts.standalone = false
 
 				require("rust-tools").setup({
 					tools = {
+						autoSetHints = false,
 						hover_actions = {
 							auto_focus = false,
 						},
@@ -135,14 +137,6 @@ local config = {
 
 		-- Add overrides for LSP server settings, the keys are the name of the server
 		["server-settings"] = {
-			["emmet_ls"] = {
-				filetypes = { "typescriptreact", "javascriptreact", "html", "css", "sass" },
-				init_options = {
-					syntaxProfiles = {
-						html = "xhtml",
-					},
-				},
-			},
 			["tsserver"] = {
 				init_options = {
 					preferences = {

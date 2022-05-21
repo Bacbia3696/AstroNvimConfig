@@ -18,8 +18,8 @@ set.foldlevelstart = 10
 set.winblend = 0
 set.pumblend = 0
 set.timeoutlen = 1000
--- set.smartindent=true
-set.cindent = true
+set.smartindent=false
+set.cindent = false
 set.cursorline = false
 set.showtabline = 2
 

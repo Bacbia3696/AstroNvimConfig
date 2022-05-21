@@ -35,6 +35,9 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight TSConstBuiltin guifg=#ffbba6
   highlight TSComment guifg=#73777B gui=italic
   highlight TSFuncMacro guifg=#4E944F gui=bold
+  highlight TSKeywordOperator guifg=#4E944F gui=bold
+  highlight TSException guifg=#4E944F gui=bold
+
   highlight TabLineSel guifg=#40d9ff guibg=NONE
   highlight TabLine guifg=#ffffff guibg=NONE
   highlight TabLineFill guibg=NONE
@@ -43,7 +46,6 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight Folded guibg=NONE gui=underline,italic
   ]],
 })
--- highlight TSTagAttribute guifg=#d39ede
 
 -- sql
 vim.api.nvim_create_autocmd("FileType", {

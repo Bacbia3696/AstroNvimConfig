@@ -326,6 +326,7 @@ local plugins = {
 		-- change default config options
 		plugins["max397574/better-escape.nvim"] = nil
 		plugins["akinsho/bufferline.nvim"] = nil
+		plugins["nvim-neo-tree/neo-tree.nvim"] = nil
 
 		plugins["nvim-telescope/telescope.nvim"].cmd = nil
 		plugins["nvim-telescope/telescope.nvim"].module = nil

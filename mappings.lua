@@ -28,7 +28,6 @@ map("n", "<leader>4", "<cmd>AerialToggle<cr>")
 map("n", "<leader>3", "<cmd>NvimTreeToggle<cr>")
 map("n", "<leader>2", "<cmd>Format<cr>")
 map("n", "<leader>1", "<cmd>Telescope builtin<cr>")
-map("n", "<leader>e", "<cmd>Neotree position=float<cr>")
 
 -- use built-in
 -- map("n", "gr", vim.lsp.buf.references)
