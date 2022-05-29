@@ -29,6 +29,8 @@ map("n", "<leader>3", "<cmd>NvimTreeToggle<cr>")
 map("n", "<leader>2", "<cmd>Format<cr>")
 map("n", "<leader>1", "<cmd>Telescope builtin<cr>")
 
+map("n", "<M-f>", "<cmd>MaximizerToggle<cr>")
+
 -- use built-in
 -- map("n", "gr", vim.lsp.buf.references)
 -- map("n", "gi", vim.lsp.buf.implementation)
@@ -37,7 +39,7 @@ map("n", "<leader>1", "<cmd>Telescope builtin<cr>")
 map("n", "ga", vim.lsp.buf.code_action)
 
 -- format onsave
-map({ "i", "n" }, "<C-s>", "<esc><cmd>Format<cr><cmd>up<CR>", { silent = true })
+map({ "i", "n", "v", "s" }, "<C-s>", "<esc><cmd>Format<cr><cmd>up<CR>", { silent = true })
 map("", "<leader>q", "<cmd>qa<CR>")
 map("", "<C-q>", "<cmd>q<cr>")
 

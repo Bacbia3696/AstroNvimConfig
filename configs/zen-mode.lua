@@ -13,7 +13,7 @@ function M.config()
 			-- * a percentage of the width / height of the editor when <= 1
 			-- * a function that returns the width or the height
 			width = 85, -- width of the Zen window
-			height = 0.7, -- height of the Zen window
+			height = 0.8, -- height of the Zen window
 			-- by default, no options are changed for the Zen window
 			-- uncomment any of the options below, or add other vim.wo options you want to apply
 			options = {

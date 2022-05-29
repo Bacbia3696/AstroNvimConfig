@@ -18,17 +18,17 @@ set.foldlevelstart = 10
 set.winblend = 0
 set.pumblend = 0
 set.timeoutlen = 1000
-set.smartindent=false
+set.smartindent = false
 set.cindent = false
 set.cursorline = false
-set.showtabline = 2
+set.showtabline = 1
 
 vim.g["slime_target"] = "kitty"
 
 vim.g.indent_blankline_char = "▏"
 
 vim.api.nvim_create_user_command("Format", function()
-	vim.lsp.buf.format({ async = true })
+	vim.lsp.buf.format({ async = false })
 end, {})
 
 vim.cmd("cnoreabbrev t Telescope")
@@ -62,7 +62,7 @@ com OR lua vim.lsp.buf.execute_command({command = "_typescript.organizeImports",
 
 vim.cmd([[
 "https://stackoverflow.com/questions/2295410/how-to-prevent-the-cursor-from-moving-back-one-character-on-leaving-insert-mode
-autocmd InsertLeave * :normal! `^
+" autocmd InsertLeave * :normal! `^
 " set virtualedit=onemore
 " wrong indent yaml
 autocmd FileType yaml setl indentkeys-=<:>

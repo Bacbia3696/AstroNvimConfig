@@ -40,6 +40,8 @@ local plugins = {
 				"andymass/vim-matchup",
 			},
 
+			"szw/vim-maximizer",
+
 			{
 				"alvarosevilla95/luatab.nvim",
 				requires = "kyazdani42/nvim-web-devicons",
@@ -53,23 +55,7 @@ local plugins = {
 			{
 				"rgroli/other.nvim",
 				config = function()
-					require("other-nvim").setup({
-						mappings = {
-							{
-								pattern = "/src/(.*)/index.tsx$",
-								target = "/src/%1/style.scss",
-							},
-							{
-								pattern = "/src/(.*)/style.scss",
-								target = "/src/%1/index.tsx$",
-							},
-						},
-					})
-
-					vim.keymap.set("", "<space>ll", "<cmd>Other<CR>", { silent = true })
-					vim.keymap.set("", "<space>lp", "<cmd>OtherSplit<CR>", { silent = true })
-					vim.keymap.set("", "<space>lv", "<cmd>OtherVSplit<CR>", { silent = true })
-					vim.keymap.set("", "<space>lc", "<cmd>OtherClear<CR>", { silent = true })
+					require("user.configs.other").config()
 				end,
 			},
 
@@ -161,13 +147,13 @@ local plugins = {
 			},
 
 			-- NOTE: show breachcrume like vs code
-			{
-				"SmiteshP/nvim-gps",
-				requires = "nvim-treesitter/nvim-treesitter",
-				config = function()
-					require("nvim-gps").setup({})
-				end,
-			},
+			-- {
+			-- 	"SmiteshP/nvim-gps",
+			-- 	requires = "nvim-treesitter/nvim-treesitter",
+			-- 	config = function()
+			-- 		require("nvim-gps").setup({})
+			-- 	end,
+			-- },
 
 			-- NOTE: lua lsp
 			{
@@ -202,6 +188,7 @@ local plugins = {
 			"theHamsta/nvim-dap-virtual-text",
 			"leoluz/nvim-dap-go",
 
+			-- for preview markdow
 			-- "ellisonleao/glow.nvim",
 
 			-- NOTE: LSP for sql
@@ -315,12 +302,13 @@ local plugins = {
 					require("hop").setup({})
 				end,
 			},
-			-- {
-			-- 	"ray-x/lsp_signature.nvim",
-			-- 	config = function()
-			-- 		require("lsp_signature").setup()
-			-- 	end,
-			-- },
+			{
+				"ray-x/lsp_signature.nvim",
+				ft = { "go" },
+				config = function()
+					require("lsp_signature").setup()
+				end,
+			},
 		}
 
 		-- change default config options
@@ -337,49 +325,7 @@ local plugins = {
 	end,
 	-- null-ls configuration
 	["null-ls"] = function()
-		-- Formatting and linting
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim
-		local status_ok, null_ls = pcall(require, "null-ls")
-		if not status_ok then
-			return
-		end
-
-		-- Check supported formatters
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/formatting
-		local formatting = null_ls.builtins.formatting
-
-		-- Check supported linters
-		-- https://github.com/jose-elias-alvarez/null-ls.nvim/tree/main/lua/null-ls/builtins/diagnostics
-		local diagnostics = null_ls.builtins.diagnostics
-
-		null_ls.setup({
-			debug = false,
-			sources = {
-				-- action from gitsigns
-				-- null_ls.builtins.code_actions.gitsigns,
-				-- Set a formatter
-				formatting.prettier,
-				formatting.black,
-				formatting.goimports,
-				formatting.shfmt.with({
-					filetypes = { "sh", "zsh", "bash", "dockerfile" },
-				}),
-				formatting.sqlfluff,
-				-- formatting.gofumpt,
-				-- formatting.golines,
-				formatting.stylua,
-				-- Set a linter
-				diagnostics.golangci_lint,
-				diagnostics.sqlfluff,
-			},
-			-- NOTE: You can remove this on attach function to disable format on save
-			---@diagnostic disable-next-line: unused-local
-			on_attach = function(client)
-				-- if client.resolved_capabilities.document_formatting then
-				--   vim.cmd "autocmd BufWritePre <buffer> lua vim.lsp.buf.format()"
-				-- end
-			end,
-		})
+		require("user.configs.null-ls").config()
 	end,
 
 	-- All other entries override the setup() call for default plugins
@@ -414,12 +360,9 @@ local plugins = {
 	cmp = function(cfg)
 		return require("user.configs.cmp").config(cfg)
 	end,
-	lualine = function(cfg)
-		return require("user.configs.lualine").config(cfg)
-	end,
 }
 
--- NOTE: for telescope extensions, need to remove before install telescope
+-- NOTE: for telescope extensions, need to comment out before install telescope
 require("telescope").load_extension("neoclip")
 require("telescope").load_extension("dap")
 require("telescope").load_extension("zoxide")

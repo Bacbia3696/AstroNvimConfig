@@ -37,7 +37,10 @@ vim.api.nvim_create_autocmd("ColorScheme", {
   highlight TSFuncMacro guifg=#4E944F gui=bold
   highlight TSKeywordOperator guifg=#4E944F gui=bold
   highlight TSException guifg=#4E944F gui=bold
+  highlight TSType guifg=#FF8C8C
+  highlight TSTypeBuiltin guifg=#FFE3A9
 
+  highlight VertSplit guifg=#56b6c2 guibg=NONE
   highlight TabLineSel guifg=#40d9ff guibg=NONE
   highlight TabLine guifg=#ffffff guibg=NONE
   highlight TabLineFill guibg=NONE
@@ -59,8 +62,12 @@ vim.api.nvim_create_autocmd("BufRead", {
 })
 
 -- for typescript definition files
+-- vim.api.nvim_create_autocmd("BufRead", {
+-- 	pattern = { "lib*.d.ts" },
+-- 	command = "ed ++ff=dos %",
+-- })
 vim.api.nvim_create_autocmd("BufRead", {
-	pattern = { "lib*.d.ts" },
+	pattern = { "*" },
 	command = "ed ++ff=dos %",
 })
 
