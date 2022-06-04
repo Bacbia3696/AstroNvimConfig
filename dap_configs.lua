@@ -1,9 +1,11 @@
+---@diagnostic disable: missing-parameter
 local dap, dapui = require("dap"), require("dapui")
 
 vim.cmd([[au FileType dap-repl lua require('dap.ext.autocompl').attach()]])
 
 dap.listeners.after.event_initialized["dapui_config"] = function()
 	dapui.open()
+	vim.cmd([[NvimTreeClose]])
 end
 dap.listeners.before.event_terminated["dapui_config"] = function()
 	dapui.close()
@@ -13,14 +15,16 @@ dap.listeners.before.event_exited["dapui_config"] = function()
 end
 
 vim.fn.sign_define("DapBreakpoint", { text = "🔴", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapBreakpointCondition", { text = "🟣", texthl = "", linehl = "", numhl = "" })
 vim.fn.sign_define("DapBreakpointRejected", { text = "🔵", texthl = "", linehl = "", numhl = "" })
-vim.fn.sign_define("DapStopped", { text = "⭐️", texthl = "", linehl = "", numhl = "" })
+vim.fn.sign_define("DapStopped", { text = "👉", texthl = "", linehl = "", numhl = "" })
 
 local dapPython = require("dap-python")
 dapPython.setup("/Users/dat.nguyen1/.pyenv/versions/cli/bin/python")
 
 require("dap-go").setup()
-table.insert(dap.configurations.go, {
+table.insert(dap.configurations.go, 1, {
+	initialize_timeout_sec = 10,
 	type = "go",
 	request = "launch",
 	name = "Gato debug",
@@ -57,6 +61,7 @@ dapui.setup({
 		repl = "r",
 		toggle = "t",
 	},
+	expand_lines = false,
 	sidebar = {
 		-- You can change the order of elements in the sidebar
 		elements = {
@@ -67,7 +72,7 @@ dapui.setup({
 			},
 			{ id = "breakpoints", size = 0.25 },
 			{ id = "stacks", size = 0.25 },
-			{ id = "watches", size = 00.25 },
+			{ id = "watches", size = 0.25 },
 		},
 		size = 40,
 		position = "left", -- Can be "left", "right", "top", "bottom"
@@ -86,6 +91,9 @@ dapui.setup({
 		},
 	},
 	windows = { indent = 1 },
+	render = {
+		max_type_length = nil, -- Can be integer or nil.
+	},
 })
 
 vim.cmd([[
@@ -103,99 +111,34 @@ nnoremap <silent> <leader>dl :lua require'dap'.run_last()<CR>
 nnoremap <leader>dd :lua require('dapui').toggle()<CR>
 ]])
 
--- Rust Adapter
--- ==============
-dap.adapters.lldb = {
+dap.adapters.rust = {
 	type = "executable",
 	command = "/opt/homebrew/opt/llvm/bin/lldb-vscode", -- adjust as needed, must be absolute path
 	name = "lldb",
 }
-dap.adapters.codelldb = function(on_adapter)
-	local cmd = "/Users/dat.nguyen1/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/adapter/codelldb"
-
-	-- This asks the system for a free port
-	local tcp = vim.loop.new_tcp()
-	tcp:bind("127.0.0.1", 0)
-	local port = tcp:getsockname().port
-	tcp:shutdown()
-	tcp:close()
-
-	-- Start codelldb with the port
-	local stdout = vim.loop.new_pipe(false)
-	local stderr = vim.loop.new_pipe(false)
-	local opts = {
-		stdio = { nil, stdout, stderr },
-		args = { "--port", tostring(port) },
-	}
-	local handle
-	local pid_or_err
-	handle, pid_or_err = vim.loop.spawn(cmd, opts, function(code)
-		stdout:close()
-		stderr:close()
-		handle:close()
-		if code ~= 0 then
-			print("codelldb exited with code", code)
-		end
-	end)
-	if not handle then
-		vim.notify("Error running codelldb: " .. tostring(pid_or_err), vim.log.levels.ERROR)
-		stdout:close()
-		stderr:close()
-		return
-	end
-	vim.notify("codelldb started. pid=" .. pid_or_err)
-	stderr:read_start(function(err, chunk)
-		assert(not err, err)
-		if chunk then
-			vim.schedule(function()
-				require("dap.repl").append(chunk)
-			end)
-		end
-	end)
-	local adapter = {
-		type = "server",
-		host = "127.0.0.1",
-		port = port,
-	}
-	-- 💀
-	-- Wait for codelldb to get ready and start listening before telling nvim-dap to connect
-	-- If you get connect errors, try to increase 500 to a higher value, or check the stderr (Open the REPL)
-	vim.defer_fn(function()
-		on_adapter(adapter)
-	end, 500)
-end
 
 -- configure the adapter for Rust Debugging
-dap.configurations.rust = {
-	{
-		name = "Launch",
-		type = "lldb",
-		request = "launch",
-		program = function()
-			return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/" .. "")
-		end,
-		cwd = "${workspaceFolder}",
-		stopOnEntry = false,
-		args = {},
+dap.configurations.rust = dap.configurations.rust or {}
+table.insert(dap.configurations.rust, 1, {
+	name = "Launch",
+	type = "rust",
+	request = "launch",
+	program = function()
+		function Split(s, delimiter)
+			local result = {}
+			for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
+				table.insert(result, match)
+			end
+			return result
+		end
 
-		-- 💀
-		-- if you change `runInTerminal` to true, you might need to change the yama/ptrace_scope setting:
-		--
-		--    echo 0 | sudo tee /proc/sys/kernel/yama/ptrace_scope
-		--
-		-- Otherwise you might get the following error:
-		--
-		--    Error on launch: Failed to attach to the target process
-		--
-		-- But you should be aware of the implications:
-		-- https://www.kernel.org/doc/html/latest/admin-guide/LSM/Yama.html
-		-- runInTerminal = false,
-
-		-- 💀
-		-- If you use `runInTerminal = true` and resize the terminal window,
-		-- lldb-vscode will receive a `SIGWINCH` signal which can cause problems
-		-- To avoid that uncomment the following option
-		-- See https://github.com/mfussenegger/nvim-dap/issues/236#issuecomment-1066306073
-		-- postRunCommands = {'process handle -p true -s false -n false SIGWINCH'}
-	},
-}
+		local cwd = vim.fn.getcwd()
+		local p = Split(cwd, "/")
+		local pkg = p[#p]
+		-- return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/" .. pkg)
+		return cwd .. "/target/debug/" .. pkg
+	end,
+	cwd = "${workspaceFolder}",
+	stopOnEntry = false,
+	args = { 3, 4, 5 },
+})

@@ -41,6 +41,8 @@ local plugins = {
 			},
 
 			"szw/vim-maximizer",
+			"neoclide/jsonc.vim",
+			{ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
 
 			{
 				"alvarosevilla95/luatab.nvim",
@@ -112,21 +114,6 @@ local plugins = {
 				end,
 			},
 
-			-- scrollbar for neovim
-			-- {
-			--   'petertriho/nvim-scrollbar',
-			--   config = function()
-			--     require("scrollbar").setup({
-			--       handle = {
-			--         text = " ",
-			--         color = nil,
-			--         cterm = nil,
-			--         highlight = "CursorColumn",
-			--         hide_if_all_visible = true, -- Hides handle if all lines are visible
-			--       },
-			--     })
-			--   end
-			-- },
 			-- Config lsp as json file like coc.nvim
 			{
 				"tamago324/nlsp-settings.nvim",
@@ -145,15 +132,6 @@ local plugins = {
 			{
 				"Pocco81/HighStr.nvim",
 			},
-
-			-- NOTE: show breachcrume like vs code
-			-- {
-			-- 	"SmiteshP/nvim-gps",
-			-- 	requires = "nvim-treesitter/nvim-treesitter",
-			-- 	config = function()
-			-- 		require("nvim-gps").setup({})
-			-- 	end,
-			-- },
 
 			-- NOTE: lua lsp
 			{
@@ -188,9 +166,6 @@ local plugins = {
 			"theHamsta/nvim-dap-virtual-text",
 			"leoluz/nvim-dap-go",
 
-			-- for preview markdow
-			-- "ellisonleao/glow.nvim",
-
 			-- NOTE: LSP for sql
 			{
 				"nanotee/sqls.nvim",
@@ -201,6 +176,20 @@ local plugins = {
 							require("sqls").on_attach(client, bufnr)
 						end,
 					})
+				end,
+			},
+
+			{
+				"https://gitlab.com/yorickpeterse/nvim-window.git",
+				config = function()
+					local window = require("nvim-window")
+					window.setup({
+						chars = { "q", "w", "e", "a", "s", "d", "z", "x", "c", "r", "t", "y", "f", "g", "h", "v", "b", "n" },
+						normal_hl = "BlackOnLightYellow",
+						hint_hl = "Bold",
+						border = "single",
+					})
+					vim.keymap.set("", "-", window.pick)
 				end,
 			},
 
@@ -226,6 +215,7 @@ local plugins = {
 				config = function()
 					require("user.configs.nvim-tree").config()
 				end,
+				tag = "nightly", -- optional, updated every week. (see issue #1193)
 			},
 			-- NOTE: highlight
 			{

@@ -107,10 +107,6 @@ local config = {
 		server_registration = function(server, opts)
 			-- Special code for rust.tools.nvim!
 			if server == "rust_analyzer" then
-				local extension_path = vim.env.HOME .. "/.vscode/extensions/vadimcn.vscode-lldb-1.7.0/"
-				local codelldb_path = extension_path .. "adapter/codelldb"
-				local liblldb_path = "/opt/homebrew/opt/llvm/lib/liblldb.dylib"
-
 				-- add custom config
 				opts.settings["rust-analyzer"].cargo.allFeatures = true
 				opts.settings["rust-analyzer"].proMacro = {
@@ -126,9 +122,6 @@ local config = {
 						},
 					},
 					server = opts,
-					dap = {
-						adapter = require("rust-tools.dap").get_codelldb_adapter(codelldb_path, liblldb_path),
-					},
 				})
 			else
 				require("lspconfig")[server].setup(opts)

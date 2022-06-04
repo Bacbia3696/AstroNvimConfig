@@ -56,18 +56,14 @@ vim.api.nvim_create_autocmd("FileType", {
 	command = [[set ts=4 | set sw=4]],
 })
 
-vim.api.nvim_create_autocmd("BufRead", {
-	pattern = { "tsconfig.json" },
-	command = "set ft=jsonc",
-})
+-- vim.api.nvim_create_autocmd("BufRead", {
+-- 	pattern = { "tsconfig.json" },
+-- 	command = "set ft=jsonc",
+-- })
 
 -- for typescript definition files
--- vim.api.nvim_create_autocmd("BufRead", {
--- 	pattern = { "lib*.d.ts" },
--- 	command = "ed ++ff=dos %",
--- })
 vim.api.nvim_create_autocmd("BufRead", {
-	pattern = { "*" },
+	pattern = { "lib*.d.ts" },
 	command = "ed ++ff=dos %",
 })
 
