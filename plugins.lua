@@ -184,7 +184,26 @@ local plugins = {
 				config = function()
 					local window = require("nvim-window")
 					window.setup({
-						chars = { "q", "w", "e", "a", "s", "d", "z", "x", "c", "r", "t", "y", "f", "g", "h", "v", "b", "n" },
+						chars = {
+							"q",
+							"w",
+							"e",
+							"a",
+							"s",
+							"d",
+							"z",
+							"x",
+							"c",
+							"r",
+							"t",
+							"y",
+							"f",
+							"g",
+							"h",
+							"v",
+							"b",
+							"n",
+						},
 						normal_hl = "BlackOnLightYellow",
 						hint_hl = "Bold",
 						border = "single",
@@ -337,6 +356,12 @@ local plugins = {
 	indent_blankline = {
 		show_current_context_start = true,
 		space_char_blankline = " ",
+	},
+	toggleterm = {
+		float_opts = {
+			width = 150,
+			height = 40,
+		},
 	},
 	gitsigns = require("user.configs.gitsigns").config,
 	telescope = require("user.configs.telescope").config,

@@ -24,6 +24,8 @@ function M.config()
 					{ key = "<C-e>", action = "" },
 					{ key = "O", action = "edit_in_place" },
 					{ key = "<CR>", action = "edit_no_picker" },
+					{ key = "-", action = "" },
+					{ key = "<C-[>", action = "dir_up" },
 				},
 			},
 		},
