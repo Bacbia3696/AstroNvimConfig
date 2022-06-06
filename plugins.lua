@@ -184,28 +184,7 @@ local plugins = {
 				config = function()
 					local window = require("nvim-window")
 					window.setup({
-						chars = {
-							"q",
-							"w",
-							"e",
-							"a",
-							"s",
-							"d",
-							"z",
-							"x",
-							"c",
-							"r",
-							"t",
-							"y",
-							"f",
-							"g",
-							"h",
-							"v",
-							"b",
-							"n",
-						},
-						normal_hl = "BlackOnLightYellow",
-						hint_hl = "Bold",
+						chars = { "q", "w", "e", "a", "s", "d", "z", "x", "c" },
 						border = "single",
 					})
 					vim.keymap.set("", "-", window.pick)
@@ -358,6 +337,7 @@ local plugins = {
 		space_char_blankline = " ",
 	},
 	toggleterm = {
+		shade_terminals = false,
 		float_opts = {
 			width = 150,
 			height = 40,

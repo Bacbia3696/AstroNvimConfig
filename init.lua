@@ -172,6 +172,7 @@ local config = {
 		require("user.autocmds")
 		require("user.dap_configs")
 		require("user.lsp_configs")
+		require("plenary.filetype").add_file("plenary_filetype")
 	end,
 }
 

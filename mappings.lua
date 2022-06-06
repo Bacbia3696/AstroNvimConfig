@@ -10,7 +10,7 @@ map("", ";", ":")
 
 -- lsp
 map("n", "gr", "<cmd>Telescope lsp_references theme=ivy<cr>")
-map("n", "gi", "<cmd>Telescope lsp_implementations theme=dropdown<cr>")
+map("n", "gi", "<cmd>Telescope lsp_implementations<cr>")
 map("n", "gt", "<cmd>Telescope lsp_type_definitions theme=dropdown<cr>")
 map("n", "gd", "<cmd>Telescope lsp_definitions theme=dropdown<cr>")
 -- map("n", "ga", "<cmd>Telescope lsp_code_actions theme=cursor<cr>")
