@@ -28,7 +28,7 @@ vim.g["slime_target"] = "kitty"
 vim.g.indent_blankline_char = "▏"
 
 vim.api.nvim_create_user_command("Format", function()
-	vim.lsp.buf.format({ async = false })
+	vim.lsp.buf.format({ async = false, timeout_ms = 5000 })
 end, {})
 
 vim.cmd("cnoreabbrev t Telescope")
