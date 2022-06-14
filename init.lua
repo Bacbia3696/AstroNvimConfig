@@ -118,7 +118,7 @@ local config = {
 					tools = {
 						autoSetHints = false,
 						hover_actions = {
-							auto_focus = false,
+							auto_focus = true,
 						},
 					},
 					server = opts,

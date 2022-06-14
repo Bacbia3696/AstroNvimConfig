@@ -1,5 +1,3 @@
--- local handlers = require("configs/lsp/handlers")
-
 local plugins = {
 	-- Add plugins, the packer syntax without the "use"
 	init = function(plugins)
@@ -150,7 +148,7 @@ local plugins = {
 						-- pass any additional options that will be merged in the final lsp config
 						lspconfig = {
 							-- cmd = {"lua-language-server"},
-							on_attach = require("configs/lsp/handlers").on_attach,
+							-- on_attach = require("core.utils").astronvim.lsp.on_attach
 						},
 					})
 

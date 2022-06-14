@@ -6,7 +6,7 @@ function M.config()
 		return
 	end
 
-	nvimtree.setup(require("core.utils").user_plugin_opts("plugins.nvim-tree", {
+nvimtree.setup({
 		sort_by = "name",
 		update_cwd = false,
 		view = {
@@ -73,7 +73,7 @@ function M.config()
 		update_focused_file = {
 			enable = true,
 		},
-	}))
+	})
 end
 
 return M

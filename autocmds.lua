@@ -54,7 +54,7 @@ vim.api.nvim_create_autocmd("ColorScheme", {
 
 -- sql
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "sql" },
+	pattern = { "sql", "rust" },
 	command = [[set ts=4 | set sw=4]],
 })
 
