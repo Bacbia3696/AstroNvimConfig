@@ -142,3 +142,100 @@ table.insert(dap.configurations.rust, 1, {
 	stopOnEntry = false,
 	args = { 3, 4, 5 },
 })
+
+
+
+-- Return the path to Python executable.
+---@return string
+local function get_python_path()
+  -- Use activated virtual environment.
+  if vim.env.VIRTUAL_ENV then
+    return vim.env.VIRTUAL_ENV .. '/bin/python'
+  end
+  -- Fallback to global pyenv Python.
+  return vim.fn.exepath 'python'
+end
+
+-- Enable debugger logging if Neovim is opened in debug mode. To open Neovim
+-- in debug mode, use the environment variable `DEBUG` like: `$ DEBUG=1 nvim`.
+---@return boolean?
+local function log_to_file()
+  if vim.env.DEBUG then
+    -- https://github.com/microsoft/debugpy/wiki/Enable-debugger-logs
+    vim.env.DEBUGPY_LOG_DIR = vim.fn.stdpath 'cache' .. '/debugpy'
+    return true
+  end
+end
+-- dap python
+require('dap-python').setup('~/.pyenv/versions/3.10.0/envs/debugpy/bin/python')
+dap.configurations.python = {
+  {
+    name = 'Launch: file',
+    type = 'python',
+    request = 'launch',
+    program = '${file}',
+    console = 'internalConsole',
+    justMyCode = false,
+    pythonPath = get_python_path,
+    logToFile = log_to_file,
+  },
+  {
+    name = 'Launch: file with arguments',
+    type = 'python',
+    request = 'launch',
+    program = '${file}',
+    args = function()
+      local args = vim.fn.input 'Arguments: '
+      return vim.split(args, ' +', { trimempty = true })
+    end,
+    console = 'internalConsole',
+    justMyCode = false,
+    pythonPath = get_python_path,
+    logToFile = log_to_file,
+  },
+  {
+    name = 'Launch: module',
+    type = 'python',
+    request = 'launch',
+    module = '${relativeFileDirname}',
+    cwd = '${workspaceFolder}',
+    console = 'internalConsole',
+    justMyCode = false,
+    pythonPath = get_python_path,
+    logToFile = log_to_file,
+  },
+  {
+    name = 'Launch: module with arguments',
+    type = 'python',
+    request = 'launch',
+    module = '${relativeFileDirname}',
+    cwd = '${workspaceFolder}',
+    args = function()
+      local args = vim.fn.input 'Arguments: '
+      return vim.split(args, ' +', { trimempty = true })
+    end,
+    console = 'internalConsole',
+    justMyCode = false,
+    pythonPath = get_python_path,
+    logToFile = log_to_file,
+  },
+  {
+    type = 'python',
+    request = 'attach',
+    name = 'Attach: remote',
+    console = 'internalConsole',
+    justMyCode = false,
+    pythonPath = get_python_path,
+    logToFile = log_to_file,
+    host = function()
+      local value = vim.fn.input 'Host [127.0.0.1]: '
+      if value ~= '' then
+        return value
+      end
+      return '127.0.0.1'
+    end,
+    port = function()
+      return tonumber(vim.fn.input 'Port [5678]: ') or 5678
+    end,
+  },
+}

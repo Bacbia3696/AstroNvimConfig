@@ -330,10 +330,6 @@ local plugins = {
 			},
 		},
 	},
-	indent_blankline = {
-		show_current_context_start = true,
-		space_char_blankline = " ",
-	},
 	toggleterm = {
 		shade_terminals = false,
 		float_opts = {
