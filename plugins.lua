@@ -3,6 +3,7 @@ local plugins = {
 	init = function(plugins)
 		-- add your new plugins to this table
 		local my_plugins = {
+			"/Users/dat.nguyen1/playground/stackmap.nvim",
 			"tpope/vim-repeat", -- repeat command
 			"tpope/vim-unimpaired", -- cool hotkey
 			"tpope/vim-surround", -- select surround
@@ -24,7 +25,6 @@ local plugins = {
 					require("spectre").setup()
 					vim.cmd([[
               nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
-
               "search current word
               nnoremap <leader>sw <cmd>lua require('spectre').open_visual({select_word=true})<CR>
               vnoremap <leader>s <cmd>lua require('spectre').open_visual()<CR>

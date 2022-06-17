@@ -41,7 +41,7 @@ map({ "i", "n", "v", "s" }, "<C-s>", "<esc><cmd>Format<cr><cmd>up<CR>", { silent
 map("", "<leader>q", "<cmd>qa<CR>")
 map("", "<C-q>", "<cmd>q<cr>")
 
--- mapping in insert/command mode
+-- mapping in insert/command mode just like emacs
 map("!", "<C-a>", "<Home>")
 map("!", "<C-e>", "<End>")
 map("!", "<C-p>", "<Up>")
@@ -59,9 +59,10 @@ map("", "<M-k>", "<cmd>tabn<cr>")
 map("", "[t", "<cmd>tabp<cr>")
 map("", "]t", "<cmd>tabn<cr>")
 -- navigate window
-for i = 1, 9, 1 do
-	map({ "n", "i" }, "<M-" .. i .. ">", "<cmd>" .. i .. "wincmd w<cr>")
+for i = 1, 9 do
+	map({ "n", "i", "t" }, "<M-" .. i .. ">", "<cmd>" .. i .. "wincmd w<cr>")
 end
+
 
 map("n", "<M-a>", "ggVG")
 map("n", "<C-w>>", "5<C-w>>")
@@ -72,10 +73,9 @@ map("n", ",p", [["0p]])
 map("n", ",P", [["0P]])
 
 -- undo breakpoint
-map("i", ",", ",<c-g>u")
-map("i", "?", "?<c-g>u")
-map("i", ".", ".<c-g>u")
-map("i", "!", "!<c-g>u")
+for _,c in ipairs({",","?",".","!"}) do
+	map("i", c, c.."<c-g>u")
+end
 
 -- plugin mapping
 map("n", "<leader><leader>", "<cmd>Telescope find_files<cr>")
@@ -83,8 +83,8 @@ map("n", "<leader>y", "<cmd>Telescope neoclip<cr>")
 map("n", "<leader>da", "<cmd>Telescope diagnostics<cr>")
 
 -- hop
-vim.keymap.set({ "n", "o", "x" }, "f", "<CMD>HopChar1MW<CR>")
-vim.keymap.set({ "n", "o", "x" }, "F", "<CMD>HopChar1<CR>")
+map({ "n", "o", "x" }, "f", "<CMD>HopChar1MW<CR>")
+map({ "n", "o", "x" }, "F", "<CMD>HopChar1<CR>")
 
 -- telescope
 
@@ -186,13 +186,10 @@ map("n", "<leader>pS", "<cmd>PackerStatus<cr>")
 map("n", "<leader>pu", "<cmd>PackerUpdate<cr>")
 
 map("t", "<C-q>", [[<C-\><C-n>]])
-map("t", "<M-1>", [[<cmd>1wincmd w<cr>]])
-map("t", "<M-2>", [[<cmd>2wincmd w<cr>]])
-map("t", "<M-3>", [[<cmd>3wincmd w<cr>]])
 -- pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy
-map("n", "ss", [[:silent execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]])
-map("n", "sy", [[:silent execute '!echo %:p:h | pbcopy'<CR>]])
-map("n", "sY", [[:silent execute '!echo %:p | pbcopy'<CR>]])
+map("n", "ss", [[:execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]])
+map("n", "sy", [[:execute '!echo %:p:h | pbcopy'<CR>]])
+map("n", "sY", [[:execute '!echo %:p | pbcopy'<CR>]])
 map("n", "st", [[yat :silent execute '!pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy'<CR> vatp]])
 
 vim.keymap.set("n", "<C-y>", "3<Cmd>lua Scroll('<C-y>', 0, 1)<CR>")
