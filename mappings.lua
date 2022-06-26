@@ -73,8 +73,8 @@ map("n", ",p", [["0p]])
 map("n", ",P", [["0P]])
 
 -- undo breakpoint
-for _,c in ipairs({",","?",".","!"}) do
-	map("i", c, c.."<c-g>u")
+for _, c in ipairs({ ",", "?", ".", "!" }) do
+	map("i", c, c .. "<c-g>u")
 end
 
 -- plugin mapping
@@ -83,8 +83,8 @@ map("n", "<leader>y", "<cmd>Telescope neoclip<cr>")
 map("n", "<leader>da", "<cmd>Telescope diagnostics<cr>")
 
 -- hop
-map({ "n", "o", "x" }, "f", "<CMD>HopChar1MW<CR>")
-map({ "n", "o", "x" }, "F", "<CMD>HopChar1<CR>")
+map({ "n", "o", "x" }, "f", "<CMD>HopChar1<CR>")
+map({ "n", "o", "x" }, "F", "<CMD>HopWord<CR>")
 
 -- telescope
 

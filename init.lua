@@ -58,6 +58,7 @@ local config = {
 			highlights.GitSignsCurrentLineBlame = { fg = C.cyan, style = "italic" }
 
 			highlights.NeorgLinkText = { fg = C.blue, style = "underline,italic" }
+			highlights.VertSplit = { fg = C.white }
 			return highlights
 		end,
 	},
