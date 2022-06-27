@@ -51,57 +51,57 @@ require("nvim-dap-virtual-text").setup({
 })
 
 dapui.setup({
-  icons = { expanded = "▾", collapsed = "▸" },
-  mappings = {
-    -- Use a table to apply multiple mappings
-    expand = { "<CR>", "<2-LeftMouse>" },
-    open = "o",
-    remove = "d",
-    edit = "e",
-    repl = "r",
-    toggle = "t",
-  },
-  -- Expand lines larger than the window
-  -- Requires >= 0.7
-  expand_lines = vim.fn.has("nvim-0.7"),
-  -- Layouts define sections of the screen to place windows.
-  -- The position can be "left", "right", "top" or "bottom".
-  -- The size specifies the height/width depending on position.
-  -- Elements are the elements shown in the layout (in order).
-  -- Layouts are opened in order so that earlier layouts take priority in window sizing.
-  layouts = {
-    {
-      elements = {
-      -- Elements can be strings or table with id and size keys.
-        { id = "scopes", size = 0.25 },
-        "breakpoints",
-        "stacks",
-        "watches",
-      },
-      size = 40,
-      position = "left",
-    },
-    {
-      elements = {
-        "repl",
-        "console",
-      },
-      size = 10,
-      position = "bottom",
-    },
-  },
-  floating = {
-    max_height = nil, -- These can be integers or a float between 0 and 1.
-    max_width = nil, -- Floats will be treated as percentage of your screen.
-    border = "single", -- Border style. Can be "single", "double" or "rounded"
-    mappings = {
-      close = { "q", "<Esc>" },
-    },
-  },
-  windows = { indent = 1 },
-  render = {
-    max_type_length = nil, -- Can be integer or nil.
-  }
+	icons = { expanded = "▾", collapsed = "▸" },
+	mappings = {
+		-- Use a table to apply multiple mappings
+		expand = { "<CR>", "<2-LeftMouse>" },
+		open = "o",
+		remove = "d",
+		edit = "e",
+		repl = "r",
+		toggle = "t",
+	},
+	-- Expand lines larger than the window
+	-- Requires >= 0.7
+	expand_lines = vim.fn.has("nvim-0.7"),
+	-- Layouts define sections of the screen to place windows.
+	-- The position can be "left", "right", "top" or "bottom".
+	-- The size specifies the height/width depending on position.
+	-- Elements are the elements shown in the layout (in order).
+	-- Layouts are opened in order so that earlier layouts take priority in window sizing.
+	layouts = {
+		{
+			elements = {
+				-- Elements can be strings or table with id and size keys.
+				{ id = "scopes", size = 0.25 },
+				"breakpoints",
+				"stacks",
+				"watches",
+			},
+			size = 40,
+			position = "left",
+		},
+		{
+			elements = {
+				"repl",
+				"console",
+			},
+			size = 10,
+			position = "bottom",
+		},
+	},
+	floating = {
+		max_height = nil, -- These can be integers or a float between 0 and 1.
+		max_width = nil, -- Floats will be treated as percentage of your screen.
+		border = "single", -- Border style. Can be "single", "double" or "rounded"
+		mappings = {
+			close = { "q", "<Esc>" },
+		},
+	},
+	windows = { indent = 1 },
+	render = {
+		max_type_length = nil, -- Can be integer or nil.
+	}
 })
 
 vim.cmd([[
@@ -156,94 +156,172 @@ table.insert(dap.configurations.rust, 1, {
 -- Return the path to Python executable.
 ---@return string
 local function get_python_path()
-  -- Use activated virtual environment.
-  if vim.env.VIRTUAL_ENV then
-    return vim.env.VIRTUAL_ENV .. '/bin/python'
-  end
-  -- Fallback to global pyenv Python.
-  return vim.fn.exepath 'python'
+	-- Use activated virtual environment.
+	if vim.env.VIRTUAL_ENV then
+		return vim.env.VIRTUAL_ENV .. '/bin/python'
+	end
+	-- Fallback to global pyenv Python.
+	return vim.fn.exepath 'python'
 end
 
 -- Enable debugger logging if Neovim is opened in debug mode. To open Neovim
 -- in debug mode, use the environment variable `DEBUG` like: `$ DEBUG=1 nvim`.
 ---@return boolean?
 local function log_to_file()
-  if vim.env.DEBUG then
-    -- https://github.com/microsoft/debugpy/wiki/Enable-debugger-logs
-    vim.env.DEBUGPY_LOG_DIR = vim.fn.stdpath 'cache' .. '/debugpy'
-    return true
-  end
+	if vim.env.DEBUG then
+		-- https://github.com/microsoft/debugpy/wiki/Enable-debugger-logs
+		vim.env.DEBUGPY_LOG_DIR = vim.fn.stdpath 'cache' .. '/debugpy'
+		return true
+	end
 end
+
 -- dap python
 require('dap-python').setup('~/.pyenv/versions/3.10.0/envs/debugpy/bin/python')
 dap.configurations.python = {
-  {
-    name = 'Launch: file',
-    type = 'python',
-    request = 'launch',
-    program = '${file}',
-    console = 'internalConsole',
-    justMyCode = false,
-    pythonPath = get_python_path,
-    logToFile = log_to_file,
-  },
-  {
-    name = 'Launch: file with arguments',
-    type = 'python',
-    request = 'launch',
-    program = '${file}',
-    args = function()
-      local args = vim.fn.input 'Arguments: '
-      return vim.split(args, ' +', { trimempty = true })
-    end,
-    console = 'internalConsole',
-    justMyCode = false,
-    pythonPath = get_python_path,
-    logToFile = log_to_file,
-  },
-  {
-    name = 'Launch: module',
-    type = 'python',
-    request = 'launch',
-    module = '${relativeFileDirname}',
-    cwd = '${workspaceFolder}',
-    console = 'internalConsole',
-    justMyCode = false,
-    pythonPath = get_python_path,
-    logToFile = log_to_file,
-  },
-  {
-    name = 'Launch: module with arguments',
-    type = 'python',
-    request = 'launch',
-    module = '${relativeFileDirname}',
-    cwd = '${workspaceFolder}',
-    args = function()
-      local args = vim.fn.input 'Arguments: '
-      return vim.split(args, ' +', { trimempty = true })
-    end,
-    console = 'internalConsole',
-    justMyCode = false,
-    pythonPath = get_python_path,
-    logToFile = log_to_file,
-  },
-  {
-    type = 'python',
-    request = 'attach',
-    name = 'Attach: remote',
-    console = 'internalConsole',
-    justMyCode = false,
-    pythonPath = get_python_path,
-    logToFile = log_to_file,
-    host = function()
-      local value = vim.fn.input 'Host [127.0.0.1]: '
-      if value ~= '' then
-        return value
-      end
-      return '127.0.0.1'
-    end,
-    port = function()
-      return tonumber(vim.fn.input 'Port [5678]: ') or 5678
-    end,
-  },
+	{
+		name = 'Launch: file',
+		type = 'python',
+		request = 'launch',
+		program = '${file}',
+		console = 'internalConsole',
+		justMyCode = false,
+		pythonPath = get_python_path,
+		logToFile = log_to_file,
+	},
+	{
+		name = 'Launch: file with arguments',
+		type = 'python',
+		request = 'launch',
+		program = '${file}',
+		args = function()
+			local args = vim.fn.input 'Arguments: '
+			return vim.split(args, ' +', { trimempty = true })
+		end,
+		console = 'internalConsole',
+		justMyCode = false,
+		pythonPath = get_python_path,
+		logToFile = log_to_file,
+	},
+	{
+		name = 'Launch: module',
+		type = 'python',
+		request = 'launch',
+		module = '${relativeFileDirname}',
+		cwd = '${workspaceFolder}',
+		console = 'internalConsole',
+		justMyCode = false,
+		pythonPath = get_python_path,
+		logToFile = log_to_file,
+	},
+	{
+		name = 'Launch: module with arguments',
+		type = 'python',
+		request = 'launch',
+		module = '${relativeFileDirname}',
+		cwd = '${workspaceFolder}',
+		args = function()
+			local args = vim.fn.input 'Arguments: '
+			return vim.split(args, ' +', { trimempty = true })
+		end,
+		console = 'internalConsole',
+		justMyCode = false,
+		pythonPath = get_python_path,
+		logToFile = log_to_file,
+	},
+	{
+		type = 'python',
+		request = 'attach',
+		name = 'Attach: remote',
+		console = 'internalConsole',
+		justMyCode = false,
+		pythonPath = get_python_path,
+		logToFile = log_to_file,
+		host = function()
+			local value = vim.fn.input 'Host [127.0.0.1]: '
+			if value ~= '' then
+				return value
+			end
+			return '127.0.0.1'
+		end,
+		port = function()
+			return tonumber(vim.fn.input 'Port [5678]: ') or 5678
+		end,
+	},
+}
+
+-- TODO: add dap for typescript
+dap.adapters.vscode_js = {
+	type = "executable",
+	command = "node",
+	args = {
+		vim.fn.stdpath("data") .. "/vscode-js-debug/out/src/vsDebugServer.js"
+	},
+}
+
+--dap.configurations.javascript = {
+--	{
+--		type = "vscode_js",
+--		request = "launch",
+--		program = "${workspaceFolder}/${file}",
+--		cwd = vim.fn.getcwd(),
+--		sourceMaps = true,
+--		protocol = "inspector",
+--		console = "integratedTerminal",
+--		skipFiles = { "**/node_modules/**", "<node_internals>/**" },
+--		restart = true,
+--	},
+--}
+
+
+dap.adapters.node2 = function(cb, config)
+	if config.preLaunchTask then vim.fn.system(config.preLaunchTask) end
+	local adapter = {
+		type = 'executable',
+		command = 'node',
+		args = {
+			vim.fn.stdpath("data") .. '/vscode-node-debug2/out/src/nodeDebug.js'
+		},
+	}
+	cb(adapter)
+end
+
+dap.configurations.javascript = {
+	{
+		name = "Launch",
+		type = "node2",
+		request = "launch",
+		program = "${file}",
+		cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		protocol = "inspector",
+		console = "integratedTerminal",
+	},
+	{
+		-- For this to work you need to make sure the node process is started with the `--inspect` flag.
+		name = "Attach to process",
+		type = "node2",
+		request = "attach",
+		processId = require "dap.utils".pick_process,
+	},
+}
+
+dap.configurations.typescript = { -- works for node-bifrost project
+	{
+		name = "Launch",
+		type = "node2",
+		request = "launch",
+		program = "${workspaceFolder}/packages/bifrost-server/dist/index.js",
+		preLaunchTask = "yarn build",
+		cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		protocol = "inspector",
+		console = "integratedTerminal",
+	},
+	{
+		-- For this to work you need to make sure the node process is started with the `--inspect` flag.
+		name = "Attach to process",
+		type = "node2",
+		request = "attach",
+		processId = require "dap.utils".pick_process,
+	},
 }

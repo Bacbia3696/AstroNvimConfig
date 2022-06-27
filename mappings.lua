@@ -187,7 +187,7 @@ map("n", "<leader>pu", "<cmd>PackerUpdate<cr>")
 
 map("t", "<C-q>", [[<C-\><C-n>]])
 -- pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy
-map("n", "ss", [[:execute '!open ' . shellescape(expand('<cfile>'), 1)<CR>]])
+map("n", "ss", [[:execute '!open %'<CR>]])
 map("n", "sy", [[:execute '!echo %:p:h | pbcopy'<CR>]])
 map("n", "sY", [[:execute '!echo %:p | pbcopy'<CR>]])
 map("n", "st", [[yat :silent execute '!pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy'<CR> vatp]])

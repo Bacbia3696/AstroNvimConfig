@@ -35,7 +35,7 @@ function M.config(cfg)
 		},
 		indent = {
 			enable = true,
-			disable = { "go", "lua", "typescript", "rust" },
+			disable = { "go", "lua", "typescript", "javascript", "rust" },
 		},
 		textobjects = {
 			select = {

@@ -14,6 +14,7 @@ set.showbreak = "↪ "
 set.cpo:append({ n = true })
 set.foldmethod = "indent"
 set.foldlevelstart = 10
+set.cmdheight = 1
 
 set.winblend = 0
 set.pumblend = 0

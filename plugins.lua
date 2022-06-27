@@ -163,6 +163,7 @@ local plugins = {
 			"rcarriga/nvim-dap-ui",
 			"theHamsta/nvim-dap-virtual-text",
 			"leoluz/nvim-dap-go",
+			"Pocco81/DAPInstall.nvim",
 
 			-- NOTE: LSP for sql
 			{
