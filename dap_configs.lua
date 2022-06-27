@@ -31,6 +31,20 @@ table.insert(dap.configurations.go, 1, {
 	program = "./cmd",
 	args = { "server" },
 })
+table.insert(dap.configurations.go, 2, {
+	initialize_timeout_sec = 20,
+	type = "go",
+	request = "launch",
+	name = "Custom debug",
+	program = function()
+		local program = vim.fn.input 'Program: '
+		return program
+	end,
+	args = function()
+		local args = vim.fn.input 'Arguments: '
+		return vim.split(args, ' +', { trimempty = true })
+	end,
+})
 
 -- Add some basic support for launch.json file like vscode
 require("dap.ext.vscode").load_launchjs()
@@ -84,7 +98,7 @@ dapui.setup({
 		{
 			elements = {
 				"repl",
-				"console",
+				-- "console",
 			},
 			size = 10,
 			position = "bottom",
@@ -93,7 +107,7 @@ dapui.setup({
 	floating = {
 		max_height = nil, -- These can be integers or a float between 0 and 1.
 		max_width = nil, -- Floats will be treated as percentage of your screen.
-		border = "single", -- Border style. Can be "single", "double" or "rounded"
+		border = "rounded", -- Border style. Can be "single", "double" or "rounded"
 		mappings = {
 			close = { "q", "<Esc>" },
 		},
@@ -148,7 +162,32 @@ table.insert(dap.configurations.rust, 1, {
 	end,
 	cwd = "${workspaceFolder}",
 	stopOnEntry = false,
-	args = { 3, 4, 5 },
+})
+table.insert(dap.configurations.rust, 1, {
+	name = "Launch with custom Args",
+	type = "rust",
+	request = "launch",
+	program = function()
+		function Split(s, delimiter)
+			local result = {}
+			for match in (s .. delimiter):gmatch("(.-)" .. delimiter) do
+				table.insert(result, match)
+			end
+			return result
+		end
+
+		local cwd = vim.fn.getcwd()
+		local p = Split(cwd, "/")
+		local pkg = p[#p]
+		-- return vim.fn.input("Path to executable: ", vim.fn.getcwd() .. "/target/debug/" .. pkg)
+		return cwd .. "/target/debug/" .. pkg
+	end,
+	cwd = "${workspaceFolder}",
+	stopOnEntry = false,
+	args = function()
+		local args = vim.fn.input 'Arguments: '
+		return vim.split(args, ' +', { trimempty = true })
+	end,
 })
 
 
@@ -297,22 +336,18 @@ dap.configurations.javascript = {
 		console = "integratedTerminal",
 	},
 	{
-		-- For this to work you need to make sure the node process is started with the `--inspect` flag.
-		name = "Attach to process",
-		type = "node2",
-		request = "attach",
-		processId = require "dap.utils".pick_process,
-	},
-}
-
-dap.configurations.typescript = { -- works for node-bifrost project
-	{
-		name = "Launch",
+		name = "Launch Custom",
 		type = "node2",
 		request = "launch",
-		program = "${workspaceFolder}/packages/bifrost-server/dist/index.js",
-		preLaunchTask = "yarn build",
-		cwd = vim.fn.getcwd(),
+		program = function()
+			local program = vim.fn.input 'Program: '
+			return program
+		end,
+		args = function()
+			local args = vim.fn.input 'Arguments: '
+			return vim.split(args, ' +', { trimempty = true })
+		end,
+    cwd = "${workspaceRoot}",
 		sourceMaps = true,
 		protocol = "inspector",
 		console = "integratedTerminal",
@@ -325,3 +360,47 @@ dap.configurations.typescript = { -- works for node-bifrost project
 		processId = require "dap.utils".pick_process,
 	},
 }
+
+dap.configurations.typescript = {
+	{
+		name = "Launch",
+		type = "node2",
+		request = "launch",
+		program = "${file}",
+		cwd = vim.fn.getcwd(),
+		sourceMaps = true,
+		protocol = "inspector",
+		console = "integratedTerminal",
+  	outFiles= {"${fileDirname}/*.js",'${workspaceFolder}/dist/**/*.js'},
+	},
+	{
+		name = "NestJS",
+		type = "node2",
+		request = "launch",
+    program= "${workspaceFolder}/dist/main.js",
+		sourceMaps = true,
+		smartStep = true,
+  	outFiles= {"${workspaceFolder}/dist/**/*.js"},
+  	runtimeArgs= { "--nolazy", "-r", "ts-node/register" },
+  console= "internalConsole",
+  outputCapture= "std",
+	},
+	{
+  name= "NestJS WS",
+  type= "node2",
+  request= "launch",
+  runtimeExecutable= "npm",
+  runtimeArgs= {
+    "run",
+    "start:debug",
+    "--",
+    "--inspect-brk"
+  },
+  console= "integratedTerminal",
+  restart= true,
+  protocol= "auto",
+  port= 9229,
+  autoAttachChildProcesses= true
+	},
+}
+dap.configurations.typescriptreact = dap.configurations.typescript
