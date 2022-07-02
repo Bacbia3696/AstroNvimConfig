@@ -23,6 +23,8 @@ set.smartindent = false
 set.cindent = false
 set.cursorline = false
 set.showtabline = 1
+set.conceallevel = 0
+-- set.wildignore:append({ "api/*", "go.sum" })
 
 vim.g["slime_target"] = "kitty"
 

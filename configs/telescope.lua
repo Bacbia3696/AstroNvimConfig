@@ -46,6 +46,9 @@ M.config = {
 				"-g=!*.{gw,pb,validate}.go",
 			},
 		},
+		live_grep = {
+			glob_pattern = { "!api/*", "!go.sum" },
+		},
 	},
 	extensions = {
 		file_browser = {

@@ -24,7 +24,7 @@ dapPython.setup("/Users/dat.nguyen1/.pyenv/versions/cli/bin/python")
 
 require("dap-go").setup()
 table.insert(dap.configurations.go, 1, {
-	initialize_timeout_sec = 20,
+	initialize_timeout_sec = 30,
 	type = "go",
 	request = "launch",
 	name = "Gato debug",
@@ -32,17 +32,17 @@ table.insert(dap.configurations.go, 1, {
 	args = { "server" },
 })
 table.insert(dap.configurations.go, 2, {
-	initialize_timeout_sec = 20,
+	initialize_timeout_sec = 30,
 	type = "go",
 	request = "launch",
 	name = "Custom debug",
 	program = function()
-		local program = vim.fn.input 'Program: '
+		local program = vim.fn.input("Program: ")
 		return program
 	end,
 	args = function()
-		local args = vim.fn.input 'Arguments: '
-		return vim.split(args, ' +', { trimempty = true })
+		local args = vim.fn.input("Arguments: ")
+		return vim.split(args, " +", { trimempty = true })
 	end,
 })
 
@@ -115,7 +115,7 @@ dapui.setup({
 	windows = { indent = 1 },
 	render = {
 		max_type_length = nil, -- Can be integer or nil.
-	}
+	},
 })
 
 vim.cmd([[
@@ -185,22 +185,20 @@ table.insert(dap.configurations.rust, 1, {
 	cwd = "${workspaceFolder}",
 	stopOnEntry = false,
 	args = function()
-		local args = vim.fn.input 'Arguments: '
-		return vim.split(args, ' +', { trimempty = true })
+		local args = vim.fn.input("Arguments: ")
+		return vim.split(args, " +", { trimempty = true })
 	end,
 })
-
-
 
 -- Return the path to Python executable.
 ---@return string
 local function get_python_path()
 	-- Use activated virtual environment.
 	if vim.env.VIRTUAL_ENV then
-		return vim.env.VIRTUAL_ENV .. '/bin/python'
+		return vim.env.VIRTUAL_ENV .. "/bin/python"
 	end
 	-- Fallback to global pyenv Python.
-	return vim.fn.exepath 'python'
+	return vim.fn.exepath("python")
 end
 
 -- Enable debugger logging if Neovim is opened in debug mode. To open Neovim
@@ -209,81 +207,81 @@ end
 local function log_to_file()
 	if vim.env.DEBUG then
 		-- https://github.com/microsoft/debugpy/wiki/Enable-debugger-logs
-		vim.env.DEBUGPY_LOG_DIR = vim.fn.stdpath 'cache' .. '/debugpy'
+		vim.env.DEBUGPY_LOG_DIR = vim.fn.stdpath("cache") .. "/debugpy"
 		return true
 	end
 end
 
 -- dap python
-require('dap-python').setup('~/.pyenv/versions/3.10.0/envs/debugpy/bin/python')
+require("dap-python").setup("~/.pyenv/versions/3.10.0/envs/debugpy/bin/python")
 dap.configurations.python = {
 	{
-		name = 'Launch: file',
-		type = 'python',
-		request = 'launch',
-		program = '${file}',
-		console = 'internalConsole',
+		name = "Launch: file",
+		type = "python",
+		request = "launch",
+		program = "${file}",
+		console = "internalConsole",
 		justMyCode = false,
 		pythonPath = get_python_path,
 		logToFile = log_to_file,
 	},
 	{
-		name = 'Launch: file with arguments',
-		type = 'python',
-		request = 'launch',
-		program = '${file}',
+		name = "Launch: file with arguments",
+		type = "python",
+		request = "launch",
+		program = "${file}",
 		args = function()
-			local args = vim.fn.input 'Arguments: '
-			return vim.split(args, ' +', { trimempty = true })
+			local args = vim.fn.input("Arguments: ")
+			return vim.split(args, " +", { trimempty = true })
 		end,
-		console = 'internalConsole',
+		console = "internalConsole",
 		justMyCode = false,
 		pythonPath = get_python_path,
 		logToFile = log_to_file,
 	},
 	{
-		name = 'Launch: module',
-		type = 'python',
-		request = 'launch',
-		module = '${relativeFileDirname}',
-		cwd = '${workspaceFolder}',
-		console = 'internalConsole',
+		name = "Launch: module",
+		type = "python",
+		request = "launch",
+		module = "${relativeFileDirname}",
+		cwd = "${workspaceFolder}",
+		console = "internalConsole",
 		justMyCode = false,
 		pythonPath = get_python_path,
 		logToFile = log_to_file,
 	},
 	{
-		name = 'Launch: module with arguments',
-		type = 'python',
-		request = 'launch',
-		module = '${relativeFileDirname}',
-		cwd = '${workspaceFolder}',
+		name = "Launch: module with arguments",
+		type = "python",
+		request = "launch",
+		module = "${relativeFileDirname}",
+		cwd = "${workspaceFolder}",
 		args = function()
-			local args = vim.fn.input 'Arguments: '
-			return vim.split(args, ' +', { trimempty = true })
+			local args = vim.fn.input("Arguments: ")
+			return vim.split(args, " +", { trimempty = true })
 		end,
-		console = 'internalConsole',
+		console = "internalConsole",
 		justMyCode = false,
 		pythonPath = get_python_path,
 		logToFile = log_to_file,
 	},
 	{
-		type = 'python',
-		request = 'attach',
-		name = 'Attach: remote',
-		console = 'internalConsole',
+		type = "python",
+		request = "attach",
+		name = "Attach: remote",
+		console = "internalConsole",
 		justMyCode = false,
 		pythonPath = get_python_path,
 		logToFile = log_to_file,
 		host = function()
-			local value = vim.fn.input 'Host [127.0.0.1]: '
-			if value ~= '' then
+			local value = vim.fn.input("Host [127.0.0.1]: ")
+			if value ~= "" then
 				return value
 			end
-			return '127.0.0.1'
+			return "127.0.0.1"
 		end,
 		port = function()
-			return tonumber(vim.fn.input 'Port [5678]: ') or 5678
+			return tonumber(vim.fn.input("Port [5678]: ")) or 5678
 		end,
 	},
 }
@@ -293,7 +291,7 @@ dap.adapters.vscode_js = {
 	type = "executable",
 	command = "node",
 	args = {
-		vim.fn.stdpath("data") .. "/vscode-js-debug/out/src/vsDebugServer.js"
+		vim.fn.stdpath("data") .. "/vscode-js-debug/out/src/vsDebugServer.js",
 	},
 }
 
@@ -311,14 +309,15 @@ dap.adapters.vscode_js = {
 --	},
 --}
 
-
 dap.adapters.node2 = function(cb, config)
-	if config.preLaunchTask then vim.fn.system(config.preLaunchTask) end
+	if config.preLaunchTask then
+		vim.fn.system(config.preLaunchTask)
+	end
 	local adapter = {
-		type = 'executable',
-		command = 'node',
+		type = "executable",
+		command = "node",
 		args = {
-			vim.fn.stdpath("data") .. '/vscode-node-debug2/out/src/nodeDebug.js'
+			vim.fn.stdpath("data") .. "/vscode-node-debug2/out/src/nodeDebug.js",
 		},
 	}
 	cb(adapter)
@@ -340,14 +339,14 @@ dap.configurations.javascript = {
 		type = "node2",
 		request = "launch",
 		program = function()
-			local program = vim.fn.input 'Program: '
+			local program = vim.fn.input("Program: ")
 			return program
 		end,
 		args = function()
-			local args = vim.fn.input 'Arguments: '
-			return vim.split(args, ' +', { trimempty = true })
+			local args = vim.fn.input("Arguments: ")
+			return vim.split(args, " +", { trimempty = true })
 		end,
-    cwd = "${workspaceRoot}",
+		cwd = "${workspaceRoot}",
 		sourceMaps = true,
 		protocol = "inspector",
 		console = "integratedTerminal",
@@ -357,7 +356,7 @@ dap.configurations.javascript = {
 		name = "Attach to process",
 		type = "node2",
 		request = "attach",
-		processId = require "dap.utils".pick_process,
+		processId = require("dap.utils").pick_process,
 	},
 }
 
@@ -371,36 +370,36 @@ dap.configurations.typescript = {
 		sourceMaps = true,
 		protocol = "inspector",
 		console = "integratedTerminal",
-  	outFiles= {"${fileDirname}/*.js",'${workspaceFolder}/dist/**/*.js'},
+		outFiles = { "${fileDirname}/*.js", "${workspaceFolder}/dist/**/*.js" },
 	},
 	{
 		name = "NestJS",
 		type = "node2",
 		request = "launch",
-    program= "${workspaceFolder}/dist/main.js",
+		program = "${workspaceFolder}/dist/main.js",
 		sourceMaps = true,
 		smartStep = true,
-  	outFiles= {"${workspaceFolder}/dist/**/*.js"},
-  	runtimeArgs= { "--nolazy", "-r", "ts-node/register" },
-  console= "internalConsole",
-  outputCapture= "std",
+		outFiles = { "${workspaceFolder}/dist/**/*.js" },
+		runtimeArgs = { "--nolazy", "-r", "ts-node/register" },
+		console = "internalConsole",
+		outputCapture = "std",
 	},
 	{
-  name= "NestJS WS",
-  type= "node2",
-  request= "launch",
-  runtimeExecutable= "npm",
-  runtimeArgs= {
-    "run",
-    "start:debug",
-    "--",
-    "--inspect-brk"
-  },
-  console= "integratedTerminal",
-  restart= true,
-  protocol= "auto",
-  port= 9229,
-  autoAttachChildProcesses= true
+		name = "NestJS WS",
+		type = "node2",
+		request = "launch",
+		runtimeExecutable = "npm",
+		runtimeArgs = {
+			"run",
+			"start:debug",
+			"--",
+			"--inspect-brk",
+		},
+		console = "integratedTerminal",
+		restart = true,
+		protocol = "auto",
+		port = 9229,
+		autoAttachChildProcesses = true,
 	},
 }
 dap.configurations.typescriptreact = dap.configurations.typescript

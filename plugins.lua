@@ -58,6 +58,9 @@ local plugins = {
 					require("user.configs.other").config()
 				end,
 			},
+			{
+				"chrisbra/csv.vim",
+			},
 
 			-- code coverage for go
 			{

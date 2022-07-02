@@ -188,8 +188,8 @@ map("n", "<leader>pu", "<cmd>PackerUpdate<cr>")
 map("t", "<C-q>", [[<C-\><C-n>]])
 -- pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy
 map("n", "ss", [[:execute '!open %'<CR>]])
-map("n", "sy", [[:execute '!echo %:p:h | pbcopy'<CR>]])
-map("n", "sY", [[:execute '!echo %:p | pbcopy'<CR>]])
+map("n", "sp", [[:execute '!echo -n %:p:h | pbcopy'<CR>]])
+map("n", "sf", [[:execute '!echo -n %:p | pbcopy'<CR>]])
 map("n", "st", [[yat :silent execute '!pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy'<CR> vatp]])
 
 vim.keymap.set("n", "<C-y>", "3<Cmd>lua Scroll('<C-y>', 0, 1)<CR>")
