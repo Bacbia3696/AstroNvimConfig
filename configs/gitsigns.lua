@@ -13,8 +13,8 @@ M.config = {
 			vim.keymap.set(mode, l, r, opts)
 		end
 		-- Navigation
-		map("n", "]c", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
-		map("n", "[c", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
+		map("n", "]g", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
+		map("n", "[g", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
 		-- Actions
 		-- Text object
 		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")

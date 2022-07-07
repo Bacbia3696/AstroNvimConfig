@@ -63,7 +63,6 @@ for i = 1, 9 do
 	map({ "n", "i", "t" }, "<M-" .. i .. ">", "<cmd>" .. i .. "wincmd w<cr>")
 end
 
-
 map("n", "<M-a>", "ggVG")
 map("n", "<C-w>>", "5<C-w>>")
 map("n", "<C-w><", "5<C-w><")
@@ -187,9 +186,14 @@ map("n", "<leader>pu", "<cmd>PackerUpdate<cr>")
 
 map("t", "<C-q>", [[<C-\><C-n>]])
 -- pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy
-map("n", "ss", [[:execute '!open %'<CR>]])
+map("n", "so", [[:execute '!open %'<CR>]])
 map("n", "sp", [[:execute '!echo -n %:p:h | pbcopy'<CR>]])
 map("n", "sf", [[:execute '!echo -n %:p | pbcopy'<CR>]])
+map("n", "sd", function()
+	local file = vim.fn.expand("%:p") .. ":" .. vim.fn.line(".")
+	print("!echo -n '" .. file .. "' | pbcopy")
+	vim.fn.execute("!echo -n '" .. file .. "' | pbcopy")
+end)
 map("n", "st", [[yat :silent execute '!pbpaste > /tmp/file.html && htmltojsx /tmp/file.html | pbcopy'<CR> vatp]])
 
 vim.keymap.set("n", "<C-y>", "3<Cmd>lua Scroll('<C-y>', 0, 1)<CR>")
