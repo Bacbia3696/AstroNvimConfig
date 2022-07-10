@@ -1,5 +1,4 @@
-local M = {}
-M.config = {
+return {
 	numhl = true,
 	signcolumn = false,
 	current_line_blame = true,
@@ -12,6 +11,7 @@ M.config = {
 			opts.buffer = bufnr
 			vim.keymap.set(mode, l, r, opts)
 		end
+
 		-- Navigation
 		map("n", "]g", "&diff ? ']c' : '<cmd>Gitsigns next_hunk<CR>'", { expr = true })
 		map("n", "[g", "&diff ? '[c' : '<cmd>Gitsigns prev_hunk<CR>'", { expr = true })
@@ -20,5 +20,3 @@ M.config = {
 		map({ "o", "x" }, "ih", ":<C-U>Gitsigns select_hunk<CR>")
 	end,
 }
-
-return M

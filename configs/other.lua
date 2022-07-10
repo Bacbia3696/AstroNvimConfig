@@ -24,6 +24,14 @@ function M.config()
 				pattern = "/src/(.*).scss$",
 				target = "/src/%1.tsx$",
 			},
+			{
+				pattern = "(.*)_test.go$",
+				target = "%1.go$",
+			},
+			{
+				pattern = "(.*).go$",
+				target = "%1_test.go$",
+			},
 		},
 	})
 

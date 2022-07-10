@@ -40,6 +40,7 @@ map("n", "ga", vim.lsp.buf.code_action)
 map({ "i", "n", "v", "s" }, "<C-s>", "<esc><cmd>Format<cr><cmd>up<CR>", { silent = true })
 map("", "<leader>q", "<cmd>qa<CR>")
 map("", "<C-q>", "<cmd>q<cr>")
+map("i", "<C-q>", "<esc><cmd>q<cr>")
 
 -- mapping in insert/command mode just like emacs
 map("!", "<C-a>", "<Home>")
@@ -50,6 +51,13 @@ map("!", "<C-b>", "<Left>")
 map("!", "<C-f>", "<Right>")
 map("!", "<M-b>", "<S-Left>")
 map("!", "<M-f>", "<S-Right>")
+
+-- SessionManager
+map("", "<leader>Sl", "<cmd>SessionManager! load_last_session<cr>")
+map("", "<leader>Ss", "<cmd>SessionManager! save_current_session<cr>")
+map("", "<leader>Sd", "<cmd>SessionManager! delete_session<cr>")
+map("", "<leader>Sf", "<cmd>SessionManager! load_session<cr>")
+map("", "<leader>S.", "<cmd>SessionManager! load_current_dir_session<cr>")
 
 -- navigate vim tab
 map("", "<M-k>", "<cmd>tabn<cr>")

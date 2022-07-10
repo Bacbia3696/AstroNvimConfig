@@ -6,9 +6,10 @@ function M.config()
 		return
 	end
 
-nvimtree.setup({
+	nvimtree.setup({
 		sort_by = "name",
 		update_cwd = false,
+		-- hijack_netrw = false,
 		view = {
 			width = 30,
 			height = 30,

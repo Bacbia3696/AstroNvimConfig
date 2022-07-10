@@ -22,15 +22,7 @@ local plugins = {
 			{
 				"windwp/nvim-spectre",
 				config = function()
-					require("spectre").setup()
-					vim.cmd([[
-              nnoremap <leader>S <cmd>lua require('spectre').open()<CR>
-              "search current word
-              nnoremap <leader>sw <cmd>lua require('spectre').open_visual({select_word=true})<CR>
-              vnoremap <leader>s <cmd>lua require('spectre').open_visual()<CR>
-              "  search in current file
-              nnoremap <leader>sp viw:lua require('spectre').open_file_search()<cr>
-          ]])
+					require("user.configs.spectre").config()
 				end,
 				requires = "nvim-lua/plenary.nvim",
 			},
@@ -289,7 +281,7 @@ local plugins = {
 				"phaazon/hop.nvim",
 				branch = "v1", -- optional but strongly recommended
 				config = function()
-					require("hop").setup({})
+					require("hop").setup({ multi_windows = true })
 				end,
 			},
 			{
@@ -333,22 +325,6 @@ local plugins = {
 				update = "pull --progress --rebase=true",
 			},
 		},
-	},
-	toggleterm = {
-		shade_terminals = false,
-		float_opts = {
-			width = 150,
-			height = 40,
-		},
-	},
-	gitsigns = require("user.configs.gitsigns").config,
-	telescope = require("user.configs.telescope").config,
-	autopairs = {
-		fast_wrap = nil,
-	},
-	notify = {
-		background_colour = "#46244C",
-		stages = "fade_in_slide_out",
 	},
 	cmp = function(cfg)
 		return require("user.configs.cmp").config(cfg)
