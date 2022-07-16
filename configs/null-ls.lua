@@ -18,7 +18,7 @@ function M.config()
 
 	null_ls.setup({
 		debug = false,
-    default_timeout = 5000,
+		default_timeout = 5000,
 		sources = {
 			-- action from gitsigns
 			-- null_ls.builtins.code_actions.gitsigns,
@@ -29,14 +29,12 @@ function M.config()
 			formatting.shfmt.with({
 				filetypes = { "sh", "zsh", "bash", "dockerfile" },
 			}),
-			formatting.sqlfluff,
-			-- formatting.gofumpt,
-			-- formatting.golines,
+			formatting.sqlfluff.with({ extra_args = { "--dialect", "postgres" } }),
 			formatting.stylua,
 			formatting.buf,
 			-- Set a linter
 			diagnostics.golangci_lint,
-			-- diagnostics.buf,
+			diagnostics.buf,
 			diagnostics.sqlfluff,
 		},
 		-- NOTE: You can remove this on attach function to disable format on save

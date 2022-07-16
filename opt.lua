@@ -72,3 +72,7 @@ autocmd FileType yaml setl indentkeys-=<:>
 ]])
 
 -- vim.lsp.set_log_level(0)
+
+_G.demo = function()
+	print("hello world")
+end

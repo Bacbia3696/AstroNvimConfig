@@ -30,10 +30,14 @@ local plugins = {
 				"andymass/vim-matchup",
 			},
 
-			"szw/vim-maximizer",
+			{
+				"szw/vim-maximizer",
+				config = function()
+					vim.g.maximizer_default_mapping_key = "<F4>"
+				end,
+			},
 			"neoclide/jsonc.vim",
 			{ "sindrets/diffview.nvim", requires = "nvim-lua/plenary.nvim" },
-
 			{
 				"alvarosevilla95/luatab.nvim",
 				requires = "kyazdani42/nvim-web-devicons",
@@ -164,9 +168,10 @@ local plugins = {
 			{
 				"nanotee/sqls.nvim",
 				config = function()
+					vim.g.sql_type_default = "postgres"
 					require("lspconfig").sqls.setup({
 						on_attach = function(client, bufnr)
-							client.resolved_capabilities.document_formatting = false
+							client.server_capabilities.documentFormattingProvider = false
 							require("sqls").on_attach(client, bufnr)
 						end,
 					})
@@ -192,7 +197,7 @@ local plugins = {
 					require("user.configs.dressing").config()
 				end,
 			},
-			-- NOTE: for Rust programming language
+			-- for Rust programming language
 			{
 				"simrat39/rust-tools.nvim",
 				requires = { "nvim-lspconfig", "nvim-lsp-installer", "nvim-dap", "Comment.nvim" },

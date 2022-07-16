@@ -99,9 +99,9 @@ local config = {
 			if client.name == "cssmodules_ls" then
 				client.server_capabilities.definitionProvider = false
 			end
-			-- vim.api.nvim_create_user_command("Format", function ()
-			-- 	vim.lsp.buf.format({async=true})
-			-- end, {})
+			if client.name == "sqls" then
+				client.server_capabilities.documentFormattingProvider = false
+			end
 		end,
 
 		-- override the lsp installer server-registration function
@@ -109,7 +109,7 @@ local config = {
 			-- Special code for rust.tools.nvim!
 			if server == "rust_analyzer" then
 				-- add custom config
-				opts.settings["rust-analyzer"].cargo.allFeatures = true
+				opts.settings["rust-analyzer"].cargo.allFeatures = false
 				opts.settings["rust-analyzer"].proMacro = {
 					enable = true,
 				}
@@ -144,18 +144,6 @@ local config = {
 			--   },
 			--   filetypes = { "typescriptreact", "javascriptreact", "scss", "css", "sass", "javascript" },
 			-- }
-			-- ["sqls"] = {
-			--   cmd = {
-			--     "/Users/dat.nguyen1/.local/share/nvim/lsp_servers/sqls/sqls",
-			--     "-config",
-			--     "/Users/dat.nguyen1/.config/sqls/config.yaml",
-			--   },
-			--   setup = {
-			--     on_attach = function(client, bufnr)
-			--       require("sqls").on_attach(client, bufnr)
-			--     end,
-			--   },
-			-- },
 		},
 	},
 
